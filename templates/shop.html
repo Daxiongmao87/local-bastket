@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}{{ shop.name }} - Local Basket{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            {% if shop.banner_image %}
+                <img src="{{ shop.banner_image }}" class="card-img-top" alt="{{ shop.name }}">
+            {% endif %}
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h2 class="card-title">{{ shop.name }}</h2>
+                        <p class="text-muted">
+                            <i class="fas fa-map-marker-alt me-2"></i>{{ shop.address }}
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        {% if shop.is_open %}
+                            <span class="badge bg-success fs-6">Open</span>
+                        {% else %}
+                            <span class="badge bg-danger fs-6">Closed</span>
+                        {% endif %}
+                        {% if shop.average_rating > 0 %}
+                            <div class="mt-2">
+                                <span class="text-warning">
+                                    {% for i in range(5) %}
+                                        {% if i < shop.average_rating %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                                <small class="text-muted">({{ shop.total_reviews }} reviews)</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if shop.description %}
+                    <p class="card-text">{{ shop.description }}</p>
+                {% endif %}
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6>Contact Information</h6>
+                        {% if shop.phone %}
+                            <p class="mb-1">
+                                <i class="fas fa-phone me-2"></i>
+                                <a href="tel:{{ shop.phone }}">{{ shop.phone }}</a>
+                            </p>
+                        {% endif %}
+                        {% if shop.email %}
+                            <p class="mb-1">
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+                            </p>
+                        {% endif %}
+                        {% if shop.website %}
+                            <p class="mb-1">
+                                <i class="fas fa-globe me-2"></i>
+                                <a href="{{ shop.website }}" target="_blank">Visit Website</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Payment Methods</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if shop.payment_cash %}
+                                <span class="badge bg-success">Cash</span>
+                            {% endif %}
+                            {% if shop.payment_venmo %}
+                                <span class="badge bg-info">Venmo</span>
+                            {% endif %}
+                            {% if shop.payment_paypal %}
+                                <span class="badge bg-primary">PayPal</span>
+                            {% endif %}
+                            {% if shop.payment_zelle %}
+                                <span class="badge bg-warning">Zelle</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                {% if current_user.is_authenticated and current_user.id == shop.user_id %}
+                    <div class="mt-3">
+                        <a href="{{ url_for('edit_shop', shop_id=shop.id) }}" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Edit Shop
+                        </a>
+                        <a href="{{ url_for('add_product', shop_id=shop.id) }}" class="btn btn-success">
+                            <i class="fas fa-plus me-2"></i>Add Product
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-shopping-cart me-2"></i>Products
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if products %}
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card product-card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h6 class="card-title">
+                                                    <i class="{{ product.icon_class }} me-2"></i>
+                                                    {{ product.name }}
+                                                </h6>
+                                                <p class="card-text text-muted">{{ product.description }}</p>
+                                                <p class="card-text">
+                                                    <strong>${{ "%.2f"|format(product.price) }}</strong> per {{ product.unit }}
+                                                </p>
+                                                {% if product.stock_quantity %}
+                                                    <small class="text-muted">{{ product.stock_quantity }} available</small>
+                                                {% endif %}
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="badge bg-secondary">{{ product.category }}</span>
+                                                {% if current_user.is_authenticated and current_user.id == shop.user_id %}
+                                                    <div class="mt-2">
+                                                        <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <form method="POST" action="{{ url_for('delete_product', product_id=product.id) }}" class="d-inline">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this product?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No products yet</h5>
+                        <p class="text-muted">This shop hasn't added any products yet.</p>
+                        {% if current_user.is_authenticated and current_user.id == shop.user_id %}
+                            <a href="{{ url_for('add_product', shop_id=shop.id) }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Your First Product
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clock me-2"></i>Hours
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    {% if shop.hours_monday %}
+                        <li><strong>Monday:</strong> {{ shop.hours_monday }}</li>
+                    {% endif %}
+                    {% if shop.hours_tuesday %}
+                        <li><strong>Tuesday:</strong> {{ shop.hours_tuesday }}</li>
+                    {% endif %}
+                    {% if shop.hours_wednesday %}
+                        <li><strong>Wednesday:</strong> {{ shop.hours_wednesday }}</li>
+                    {% endif %}
+                    {% if shop.hours_thursday %}
+                        <li><strong>Thursday:</strong> {{ shop.hours_thursday }}</li>
+                    {% endif %}
+                    {% if shop.hours_friday %}
+                        <li><strong>Friday:</strong> {{ shop.hours_friday }}</li>
+                    {% endif %}
+                    {% if shop.hours_saturday %}
+                        <li><strong>Saturday:</strong> {{ shop.hours_saturday }}</li>
+                    {% endif %}
+                    {% if shop.hours_sunday %}
+                        <li><strong>Sunday:</strong> {{ shop.hours_sunday }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-star me-2"></i>Reviews
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if reviews %}
+                    {% for review in reviews %}
+                        <div class="mb-3 pb-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>{{ review.buyer.username }}</strong>
+                                <small class="text-muted">{{ review.created_at.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                            <div class="text-warning">
+                                {% for i in range(5) %}
+                                    {% if i < review.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% if review.comment %}
+                                <p class="mt-2 mb-0">{{ review.comment }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No reviews yet.</p>
+                {% endif %}
+                
+                {% if current_user.is_authenticated and current_user.id != shop.user_id and review_form %}
+                    <form method="POST" action="{{ url_for('add_review', shop_id=shop.id) }}" class="mt-3">
+                        {{ review_form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ review_form.rating.label(class="form-label") }}
+                            {{ review_form.rating(class="form-select") }}
+                        </div>
+                        <div class="mb-3">
+                            {{ review_form.comment.label(class="form-label") }}
+                            {{ review_form.comment(class="form-control", rows="3") }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-star me-2"></i>Submit Review
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

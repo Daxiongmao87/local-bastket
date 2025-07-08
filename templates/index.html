@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Local Basket{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4 text-primary mb-3">Welcome to Local Basket</h1>
+        <p class="lead mb-4">Discover fresh, local produce and artisan goods from homesteaders and farmers in your community.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('map_view') }}" class="btn btn-primary btn-lg me-md-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>Find Local Sellers
+                    </a>
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-store me-2"></i>Start Selling
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="mb-4">Featured Local Shops</h2>
+        
+        {% if shops %}
+            <div class="row">
+                {% for shop in shops %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shop-card h-100">
+                            {% if shop.banner_image %}
+                                <img src="{{ shop.banner_image }}" class="card-img-top" alt="{{ shop.name }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {{ shop.name }}
+                                    {% if shop.is_open %}
+                                        <span class="badge bg-success ms-2">Open</span>
+                                    {% else %}
+                                        <span class="badge bg-danger ms-2">Closed</span>
+                                    {% endif %}
+                                </h5>
+                                <p class="card-text">{{ shop.description[:100] }}{% if shop.description|length > 100 %}...{% endif %}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                                        <small class="text-muted">{{ shop.address.split(',')[0] }}</small>
+                                    </div>
+                                    <div>
+                                        {% if shop.average_rating > 0 %}
+                                            <span class="text-warning">
+                                                {% for i in range(5) %}
+                                                    {% if i < shop.average_rating %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                            <small class="text-muted">({{ shop.total_reviews }})</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{{ url_for('view_shop', shop_id=shop.id) }}" class="btn btn-primary btn-sm">View Shop</a>
+                                {% if shop.phone %}
+                                    <a href="tel:{{ shop.phone }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-store fa-3x text-muted mb-3"></i>
+                <h3 class="text-muted">No shops yet!</h3>
+                <p class="text-muted">Be the first to create a shop and start selling your local goods.</p>
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Get Started</a>
+                {% elif current_user.is_seller and not current_user.shop %}
+                    <a href="{{ url_for('create_shop') }}" class="btn btn-primary">Create Your Shop</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-search me-2"></i>Find Products
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ url_for('search') }}">
+                    {{ search_form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ search_form.query(class="form-control", placeholder="Search for products...") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ search_form.category(class="form-select") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ search_form.max_distance(class="form-select") }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-leaf me-2"></i>Why Local?
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Fresh, seasonal produce
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Support local farmers
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Reduce environmental impact
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Build community connections
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Know your food source
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if current_user.is_authenticated and current_user.is_seller and not current_user.shop %}
+    <div class="alert alert-info mt-4">
+        <h5 class="alert-heading">Ready to start selling?</h5>
+        <p>You're registered as a seller but haven't created your shop yet. Set up your shop profile to start reaching local customers!</p>
+        <a href="{{ url_for('create_shop') }}" class="btn btn-primary">Create Your Shop</a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Register service worker for PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/static/sw.js')
+            .then(function(registration) {
+                console.log('ServiceWorker registration successful');
+            })
+            .catch(function(err) {
+                console.log('ServiceWorker registration failed');
+            });
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Find Local Sellers - Local Basket{% endblock %}
+
+{% block head %}
+<style>
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 0.375rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-map-marker-alt me-2"></i>Find Local Sellers
+                </h4>
+            </div>
+            <div class="card-body">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-store me-2"></i>Shop List
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="shop-list">
+                    <!-- Shop cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let map;
+let markers = [];
+let shops = [];
+
+function initMap() {
+    // Default to a central location
+    const defaultCenter = { lat: 39.8283, lng: -98.5795 }; // Center of US
+    
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: defaultCenter
+    });
+    
+    // Try to get user's location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            map.setCenter(userLocation);
+            
+            // Add user location marker
+            new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                title: 'Your Location',
+                icon: {
+                    url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                }
+            });
+        });
+    }
+    
+    // Load shops from API
+    loadShops();
+}
+
+function loadShops() {
+    fetch('/api/shops')
+        .then(response => response.json())
+        .then(data => {
+            shops = data;
+            displayShopsOnMap();
+            displayShopList();
+        })
+        .catch(error => {
+            console.error('Error loading shops:', error);
+        });
+}
+
+function displayShopsOnMap() {
+    // Clear existing markers
+    markers.forEach(marker => marker.setMap(null));
+    markers = [];
+    
+    shops.forEach(shop => {
+        const marker = new google.maps.Marker({
+            position: { lat: shop.latitude, lng: shop.longitude },
+            map: map,
+            title: shop.name,
+            icon: {
+                url: shop.is_open ? 
+                    'https://maps.google.com/mapfiles/ms/icons/green-dot.png' :
+                    'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
+            }
+        });
+        
+        const infoWindow = new google.maps.InfoWindow({
+            content: `
+                <div>
+                    <h6>${shop.name}</h6>
+                    <p class="mb-1">${shop.address}</p>
+                    <p class="mb-1">
+                        <span class="badge ${shop.is_open ? 'bg-success' : 'bg-danger'}">
+                            ${shop.is_open ? 'Open' : 'Closed'}
+                        </span>
+                    </p>
+                    ${shop.rating > 0 ? `<p class="mb-1">Rating: ${shop.rating.toFixed(1)}/5</p>` : ''}
+                    <a href="/shop/${shop.id}" class="btn btn-primary btn-sm">Visit Shop</a>
+                </div>
+            `
+        });
+        
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+        
+        markers.push(marker);
+    });
+}
+
+function displayShopList() {
+    const shopList = document.getElementById('shop-list');
+    
+    if (shops.length === 0) {
+        shopList.innerHTML = `
+            <div class="text-center py-4">
+                <i class="fas fa-store fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">No shops found</h5>
+                <p class="text-muted">Be the first to create a shop in your area!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const shopCards = shops.map(shop => `
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        ${shop.name}
+                        <span class="badge ${shop.is_open ? 'bg-success' : 'bg-danger'} ms-2">
+                            ${shop.is_open ? 'Open' : 'Closed'}
+                        </span>
+                    </h6>
+                    <p class="card-text text-muted">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        ${shop.address}
+                    </p>
+                    ${shop.rating > 0 ? `
+                        <p class="card-text">
+                            <span class="text-warning">
+                                ${'★'.repeat(Math.floor(shop.rating))}${'☆'.repeat(5 - Math.floor(shop.rating))}
+                            </span>
+                            <small class="text-muted">${shop.rating.toFixed(1)}/5</small>
+                        </p>
+                    ` : ''}
+                </div>
+                <div class="card-footer">
+                    <a href="/shop/${shop.id}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-eye me-1"></i>Visit Shop
+                    </a>
+                    <button class="btn btn-outline-primary btn-sm" onclick="centerMapOnShop(${shop.latitude}, ${shop.longitude})">
+                        <i class="fas fa-map-marker-alt me-1"></i>Show on Map
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    shopList.innerHTML = `<div class="row">${shopCards}</div>`;
+}
+
+function centerMapOnShop(lat, lng) {
+    map.setCenter({ lat: lat, lng: lng });
+    map.setZoom(15);
+}
+
+// Initialize map when page loads
+window.onload = function() {
+    // Check if Google Maps API is available
+    if (typeof google !== 'undefined') {
+        initMap();
+    } else {
+        // Fallback for when Google Maps isn't available
+        document.getElementById('map').innerHTML = `
+            <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+                <div class="text-center">
+                    <i class="fas fa-map fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Map service unavailable</h5>
+                    <p class="text-muted">Please check the shop list below to find local sellers.</p>
+                </div>
+            </div>
+        `;
+        
+        // Still load and display shops
+        loadShops();
+    }
+};
+</script>
+
+<!-- Google Maps API - Replace YOUR_API_KEY with actual key -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+{% endblock %}

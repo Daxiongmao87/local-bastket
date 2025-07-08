@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Search - Local Basket{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-search me-2"></i>Search Filters
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="GET">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.query.label(class="form-label") }}
+                        {{ form.query(class="form-control", placeholder="Search for products or shops...") }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.category.label(class="form-label") }}
+                        {{ form.category(class="form-select") }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.max_distance.label(class="form-label") }}
+                        {{ form.max_distance(class="form-select") }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.min_rating.label(class="form-label") }}
+                        {{ form.min_rating(class="form-select") }}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search me-2"></i>Search
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-tags me-2"></i>Popular Categories
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="?category=vegetables" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-carrot me-1"></i>Vegetables
+                    </a>
+                    <a href="?category=fruits" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-apple-alt me-1"></i>Fruits
+                    </a>
+                    <a href="?category=eggs" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-egg me-1"></i>Eggs
+                    </a>
+                    <a href="?category=dairy" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-cheese me-1"></i>Dairy
+                    </a>
+                    <a href="?category=honey" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-honey-pot me-1"></i>Honey
+                    </a>
+                    <a href="?category=herbs" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-seedling me-1"></i>Herbs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-store me-2"></i>Search Results
+                    {% if shops %}
+                        <span class="badge bg-primary ms-2">{{ shops|length }} found</span>
+                    {% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if shops %}
+                    <div class="row">
+                        {% for shop in shops %}
+                            <div class="col-md-6 mb-4">
+                                <div class="card shop-card h-100">
+                                    {% if shop.banner_image %}
+                                        <img src="{{ shop.banner_image }}" class="card-img-top" alt="{{ shop.name }}">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            {{ shop.name }}
+                                            {% if shop.is_open %}
+                                                <span class="badge bg-success ms-2">Open</span>
+                                            {% else %}
+                                                <span class="badge bg-danger ms-2">Closed</span>
+                                            {% endif %}
+                                        </h6>
+                                        <p class="card-text text-muted">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            {{ shop.address.split(',')[0] }}
+                                        </p>
+                                        {% if shop.description %}
+                                            <p class="card-text">
+                                                {{ shop.description[:100] }}{% if shop.description|length > 100 %}...{% endif %}
+                                            </p>
+                                        {% endif %}
+                                        
+                                        {% if shop.average_rating > 0 %}
+                                            <div class="mb-2">
+                                                <span class="text-warning">
+                                                    {% for i in range(5) %}
+                                                        {% if i < shop.average_rating %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                                <small class="text-muted">({{ shop.total_reviews }} reviews)</small>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <div class="d-flex flex-wrap gap-1 mb-2">
+                                            {% if shop.payment_cash %}
+                                                <span class="badge bg-success">Cash</span>
+                                            {% endif %}
+                                            {% if shop.payment_venmo %}
+                                                <span class="badge bg-info">Venmo</span>
+                                            {% endif %}
+                                            {% if shop.payment_paypal %}
+                                                <span class="badge bg-primary">PayPal</span>
+                                            {% endif %}
+                                            {% if shop.payment_zelle %}
+                                                <span class="badge bg-warning">Zelle</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        {% if shop.products %}
+                                            <div class="mb-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-shopping-cart me-1"></i>
+                                                    {{ shop.products|length }} products available
+                                                </small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{{ url_for('view_shop', shop_id=shop.id) }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye me-1"></i>Visit Shop
+                                        </a>
+                                        {% if shop.phone %}
+                                            <a href="tel:{{ shop.phone }}" class="btn btn-outline-primary btn-sm">
+                                                <i class="fas fa-phone"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No results found</h5>
+                        <p class="text-muted">Try adjusting your search filters or browse all available shops.</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">
+                            <i class="fas fa-home me-2"></i>Browse All Shops
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
