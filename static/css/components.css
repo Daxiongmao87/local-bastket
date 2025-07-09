@@ -246,6 +246,46 @@
   margin-top: var(--spacing-xs);
 }
 
+.invalid-feedback {
+  font-size: var(--font-size-sm);
+  color: var(--error-color);
+  margin-top: var(--spacing-xs);
+  display: block;
+}
+
+/* Modal styles */
+.modal {
+  z-index: var(--z-modal);
+}
+
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: var(--background-light);
+  border: var(--border-width-thin) solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+  background-color: var(--background-dark);
+  border-bottom: var(--border-width-thin) solid var(--border-color);
+  padding: var(--spacing-base);
+}
+
+.modal-body {
+  padding: var(--spacing-base);
+}
+
+.modal-footer {
+  background-color: var(--background-dark);
+  border-top: var(--border-width-thin) solid var(--border-color);
+  padding: var(--spacing-base);
+}
+
 /* Cards */
 .card {
   background-color: var(--background-light);
@@ -347,10 +387,44 @@
 
 /* Navigation */
 .navbar {
-  background-color: var(--background-light);
+  background-color: var(--primary-color);
   border-bottom: var(--border-width-thin) solid var(--border-color);
   box-shadow: var(--shadow-sm);
   padding: var(--spacing-sm) 0;
+}
+
+.navbar .navbar-brand {
+  color: var(--background-light) !important;
+}
+
+.navbar .nav-link {
+  color: var(--background-light) !important;
+}
+
+.navbar .nav-link:hover {
+  color: var(--background-dark) !important;
+}
+
+.navbar .dropdown-menu {
+  background-color: var(--background-light);
+  border: var(--border-width-thin) solid var(--border-color);
+}
+
+.navbar .dropdown-item {
+  color: var(--text-color);
+}
+
+.navbar .dropdown-item:hover {
+  background-color: var(--primary-light);
+  color: var(--background-light);
+}
+
+.navbar-toggler {
+  border: var(--border-width-thin) solid var(--background-light);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .navbar-brand {
@@ -440,6 +514,26 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+  background-color: var(--primary-dark);
+  color: var(--background-light);
+  border-top: var(--border-width-thin) solid var(--border-color);
+}
+
+.footer a {
+  color: var(--background-light);
+}
+
+.footer a:hover {
+  color: var(--background-dark);
+}
+
+.footer h5 {
+  color: var(--background-light);
+  margin-bottom: var(--spacing-base);
 }
 
 /* Responsive design */

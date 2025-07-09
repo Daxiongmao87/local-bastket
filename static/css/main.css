@@ -7,6 +7,13 @@
 @import url('../fontawesome-pro-5.15.4-web/css/all.min.css');
 
 /* App-specific styles */
+
+/* Container wrapper for main content */
+.main-wrapper {
+  min-height: calc(100vh - 200px);
+  padding-top: var(--spacing-base);
+}
+
 .hero {
   background: linear-gradient(135deg, var(--basket-brown), var(--harvest-gold));
   color: var(--background-light);
@@ -181,6 +188,20 @@
   transition: all var(--transition-base);
 }
 
+.product-card .card-body {
+  padding: var(--spacing-base);
+}
+
+.product-card .card-title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.product-card .card-text {
+  color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+}
+
 .product-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-base);
@@ -314,6 +335,109 @@
   border-radius: var(--border-radius-base);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+}
+
+/* Bootstrap overrides for badges */
+.badge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-base);
+}
+
+.badge.bg-success {
+  background-color: var(--success-color) !important;
+}
+
+.badge.bg-danger {
+  background-color: var(--error-color) !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.badge.bg-warning {
+  background-color: var(--warning-color) !important;
+}
+
+.badge.bg-info {
+  background-color: var(--info-color) !important;
+}
+
+/* Bootstrap button overrides */
+.btn.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.btn.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+}
+
+.btn.btn-secondary:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
+}
+
+.btn.btn-success {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+  color: white;
+}
+
+.btn.btn-success:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
+}
+
+.btn.btn-outline-primary {
+  background-color: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+/* Text utility overrides */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-secondary {
+  color: var(--secondary-color) !important;
+}
+
+.text-success {
+  color: var(--success-color) !important;
+}
+
+.text-warning {
+  color: var(--warning-color) !important;
+}
+
+.text-danger {
+  color: var(--error-color) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
 }
 
 /* Flash messages */

@@ -3,23 +3,19 @@
 {% block title %}Home - Local Basket{% endblock %}
 
 {% block content %}
-<div class="hero-section text-center py-5 mb-5">
-    <div class="container">
-        <h1 class="display-4 text-primary mb-3">Welcome to Local Basket</h1>
-        <p class="lead mb-4">Discover fresh, local produce and artisan goods from homesteaders and farmers in your community.</p>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                    <a href="{{ url_for('main.map_view') }}" class="btn btn-primary btn-lg me-md-2">
-                        <i class="fas fa-map-marker-alt me-2"></i>Find Local Sellers
-                    </a>
-                    {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">
-                            <i class="fas fa-store me-2"></i>Start Selling
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
+<div class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Local Basket</h1>
+        <p class="hero-subtitle">Discover fresh, local produce and artisan goods from homesteaders and farmers in your community.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('main.map_view') }}" class="btn btn-light">
+                <i class="fas fa-map-marker-alt me-2"></i>Find Local Sellers
+            </a>
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary">
+                    <i class="fas fa-store me-2"></i>Start Selling
+                </a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -29,51 +25,43 @@
         <h2 class="mb-4">Featured Local Shops</h2>
         
         {% if shops %}
-            <div class="row">
+            <div class="shop-grid">
                 {% for shop in shops %}
                     <div class="col-md-6 mb-4">
-                        <div class="card shop-card h-100">
-                            {% if shop.banner_image %}
-                                <img src="{{ shop.banner_image }}" class="card-img-top" alt="{{ shop.name }}">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">
+                        <div class="shop-card">
+                            <div class="shop-card-header">
+                                {% if shop.banner_image %}
+                                    <img src="{{ shop.banner_image }}" alt="{{ shop.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <i class="fas fa-store"></i>
+                                {% endif %}
+                            </div>
+                            <div class="shop-card-body">
+                                <h5 class="shop-card-title">
                                     {{ shop.name }}
-                                    {% if shop.is_open %}
-                                        <span class="badge bg-success ms-2">Open</span>
-                                    {% else %}
-                                        <span class="badge bg-danger ms-2">Closed</span>
-                                    {% endif %}
                                 </h5>
-                                <p class="card-text">{{ shop.description[:100] }}{% if shop.description|length > 100 %}...{% endif %}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                        <small class="text-muted">{{ shop.address.split(',')[0] }}</small>
-                                    </div>
-                                    <div>
-                                        {% if shop.average_rating > 0 %}
-                                            <span class="text-warning">
-                                                {% for i in range(5) %}
-                                                    {% if i < shop.average_rating %}
-                                                        <i class="fas fa-star"></i>
-                                                    {% else %}
-                                                        <i class="far fa-star"></i>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </span>
-                                            <small class="text-muted">({{ shop.total_reviews }})</small>
-                                        {% endif %}
-                                    </div>
+                                <p class="shop-card-text">{{ shop.description[:100] }}{% if shop.description|length > 100 %}...{% endif %}</p>
+                                <div class="shop-rating">
+                                    {% if shop.average_rating > 0 %}
+                                        <div class="stars">
+                                            {% for i in range(5) %}
+                                                {% if i < shop.average_rating %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <small class="text-muted">({{ shop.total_reviews }})</small>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="card-footer">
+                            <div class="shop-card-footer">
+                                <div class="shop-status">
+                                    <div class="shop-status-indicator {% if not shop.is_open %}closed{% endif %}"></div>
+                                    <span>{% if shop.is_open %}Open{% else %}Closed{% endif %}</span>
+                                </div>
                                 <a href="{{ url_for('shop.view_shop', shop_id=shop.id) }}" class="btn btn-primary btn-sm">View Shop</a>
-                                {% if shop.phone %}
-                                    <a href="tel:{{ shop.phone }}" class="btn btn-outline-primary btn-sm">
-                                        <i class="fas fa-phone"></i>
-                                    </a>
-                                {% endif %}
                             </div>
                         </div>
                     </div>

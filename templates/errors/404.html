@@ -26,18 +26,18 @@
                 <div class="error-suggestions">
                     <h3>Here are some suggestions:</h3>
                     <ul>
-                        <li><i class="fas fa-home"></i> Go back to the <a href="{{ url_for('index') }}">homepage</a></li>
-                        <li><i class="fas fa-search"></i> Try our <a href="{{ url_for('search') }}">search feature</a></li>
-                        <li><i class="fas fa-map"></i> Browse shops on our <a href="{{ url_for('map_view') }}">map</a></li>
+                        <li><i class="fas fa-home"></i> Go back to the <a href="{{ url_for('main.index') }}">homepage</a></li>
+                        <li><i class="fas fa-search"></i> Try our <a href="{{ url_for('main.search') }}">search feature</a></li>
+                        <li><i class="fas fa-map"></i> Browse shops on our <a href="{{ url_for('main.map_view') }}">map</a></li>
                         <li><i class="fas fa-arrow-left"></i> Go <a href="javascript:history.back()">back to the previous page</a></li>
                     </ul>
                 </div>
                 
                 <div class="error-actions">
-                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <a href="{{ url_for('main.index') }}" class="btn btn-primary">
                         <i class="fas fa-home"></i> Back to Home
                     </a>
-                    <a href="{{ url_for('search') }}" class="btn btn-outline-primary">
+                    <a href="{{ url_for('main.search') }}" class="btn btn-outline-primary">
                         <i class="fas fa-search"></i> Search Shops
                     </a>
                 </div>
