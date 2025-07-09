@@ -1,0 +1,132 @@
+/* CSS Custom Properties (Variables) - Farmer's Market Theme */
+:root {
+  /* Colors - Earthy and Organic Palette (per DEVELOPMENT.md specs) */
+  --primary-color: #8B4513;            /* Saddle brown (main brand color) */
+  --primary-light: #A0522D;            /* Sienna */
+  --primary-dark: #654321;             /* Dark brown */
+  
+  --secondary-color: #228B22;          /* Forest green */
+  --secondary-light: #32CD32;          /* Lime green */
+  --secondary-dark: #006400;           /* Dark green */
+  
+  --accent-color: #DAA520;             /* Goldenrod */
+  --accent-light: #FFD700;             /* Gold */
+  --accent-dark: #B8860B;              /* Dark goldenrod */
+  
+  --background-color: #FDF5E6;         /* Old lace (warm cream) */
+  --background-light: #FFFEF7;         /* Ivory */
+  --background-dark: #F5DEB3;          /* Wheat */
+  
+  --text-color: #3E2723;               /* Dark brown (earthy) */
+  --text-light: #5D4037;               /* Medium brown */
+  --text-muted: #8D6E63;               /* Light brown */
+  
+  --border-color: #D7CCC8;             /* Light brown */
+  --border-light: #EFEBE9;             /* Very light brown */
+  --border-dark: #A1887F;              /* Medium brown */
+  
+  /* Status colors with earthy tones */
+  --success-color: #228B22;            /* Forest green (same as secondary) */
+  --warning-color: #FF8C00;            /* Dark orange */
+  --error-color: #CD5C5C;              /* Indian red */
+  --info-color: #708090;               /* Slate gray */
+  
+  /* Typography - Artisan/Farmer's Market Style */
+  --font-family-primary: 'Crimson Text', 'Georgia', 'Times New Roman', serif;  /* Artisan serif */
+  --font-family-secondary: 'Cabin', 'Trebuchet MS', 'Lucida Grande', sans-serif; /* Rustic sans-serif */
+  --font-family-accent: 'Amatic SC', 'Comic Sans MS', cursive; /* Hand-lettered style for headers */
+  --font-family-mono: 'Courier New', monospace;
+  
+  --font-size-xs: 0.75rem;             /* 12px */
+  --font-size-sm: 0.875rem;            /* 14px */
+  --font-size-base: 1rem;              /* 16px */
+  --font-size-lg: 1.125rem;            /* 18px */
+  --font-size-xl: 1.25rem;             /* 20px */
+  --font-size-2xl: 1.5rem;             /* 24px */
+  --font-size-3xl: 1.875rem;           /* 30px */
+  --font-size-4xl: 2.25rem;            /* 36px */
+  --font-size-5xl: 3rem;               /* 48px - for farmer's market style headers */
+  
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;       /* For market-style emphasis */
+  
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-loose: 1.75;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;               /* 4px */
+  --spacing-sm: 0.5rem;                /* 8px */
+  --spacing-base: 1rem;                /* 16px */
+  --spacing-lg: 1.5rem;                /* 24px */
+  --spacing-xl: 2rem;                  /* 32px */
+  --spacing-2xl: 2.5rem;               /* 40px */
+  --spacing-3xl: 3rem;                 /* 48px */
+  --spacing-4xl: 4rem;                 /* 64px */
+  
+  /* Layout - Rustic styling */
+  --border-radius-sm: 0.25rem;         /* 4px */
+  --border-radius-base: 0.375rem;      /* 6px */
+  --border-radius-lg: 0.75rem;         /* 12px */
+  --border-radius-xl: 1rem;            /* 16px */
+  --border-radius-full: 9999px;        /* Full circle */
+  
+  --border-width-thin: 1px;
+  --border-width-base: 2px;
+  --border-width-thick: 3px;
+  --border-width-extra-thick: 4px;     /* For rustic borders */
+  
+  /* Shadows - Softer, more organic */
+  --shadow-sm: 0 1px 3px rgba(139, 69, 19, 0.1);
+  --shadow-base: 0 2px 6px rgba(139, 69, 19, 0.1), 0 1px 3px rgba(139, 69, 19, 0.08);
+  --shadow-lg: 0 8px 25px rgba(139, 69, 19, 0.1), 0 3px 10px rgba(139, 69, 19, 0.08);
+  --shadow-xl: 0 20px 40px rgba(139, 69, 19, 0.1), 0 8px 16px rgba(139, 69, 19, 0.08);
+  --shadow-inner: inset 0 2px 4px rgba(139, 69, 19, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.35s ease;
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* Breakpoints (for reference in media queries) */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+  
+  /* Container widths */
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1140px;
+  --container-2xl: 1320px;
+  
+  /* Farmer's Market specific colors */
+  --basket-brown: #8B4513;             /* Main basket color */
+  --fresh-green: #228B22;              /* Fresh produce */
+  --harvest-gold: #DAA520;             /* Harvest time */
+  --barn-red: #B22222;                 /* Classic barn red */
+  --wheat-beige: #F5DEB3;              /* Wheat field */
+  --earth-brown: #654321;              /* Rich soil */
+  --sage-green: #9CAF88;               /* Herb garden */
+  --pumpkin-orange: #FF7518;           /* Autumn harvest */
+  --corn-yellow: #FFDB58;              /* Corn silk */
+  --apple-red: #DC143C;                /* Fresh apples */
+}
+
+/* Import Google Fonts for artisan typography */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');

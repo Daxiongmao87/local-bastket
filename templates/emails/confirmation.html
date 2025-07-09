@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Email - Local Basket</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f5f5dc;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, #4a7c59, #6b9b7f);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .email-header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .email-header .subtitle {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .email-body {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .greeting {
+            font-size: 18px;
+            color: #4a7c59;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .confirmation-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #4a7c59;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2d5a3d;
+        }
+        
+        .alternative-link {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .alternative-link p {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .alternative-link a {
+            color: #4a7c59;
+            word-break: break-all;
+        }
+        
+        .features {
+            margin: 30px 0;
+        }
+        
+        .features h3 {
+            color: #4a7c59;
+            margin-bottom: 15px;
+        }
+        
+        .features ul {
+            padding-left: 20px;
+        }
+        
+        .features li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .email-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .footer-links {
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: #4a7c59;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-icons {
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px;
+            background-color: #4a7c59;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 20px;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .email-header, .email-body {
+                padding: 20px;
+            }
+            
+            .email-header h1 {
+                font-size: 24px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="email-header">
+            <h1>🧺 Local Basket</h1>
+            <p class="subtitle">Your Local Produce Marketplace</p>
+        </div>
+        
+        <div class="email-body">
+            <div class="greeting">
+                Hello {{ user.full_name }}!
+            </div>
+            
+            <div class="message">
+                <p>Welcome to Local Basket! We're excited to have you join our community of local food enthusiasts.</p>
+                
+                <p>To get started and ensure the security of your account, please confirm your email address by clicking the button below:</p>
+            </div>
+            
+            <div class="confirmation-button">
+                <a href="{{ confirm_url }}" class="btn">Confirm Email Address</a>
+            </div>
+            
+            <div class="alternative-link">
+                <p>If the button above doesn't work, copy and paste this link into your browser:</p>
+                <a href="{{ confirm_url }}">{{ confirm_url }}</a>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="features">
+                <h3>What you can do with Local Basket:</h3>
+                <ul>
+                    <li>🗺️ <strong>Find Local Shops:</strong> Discover farmers and homesteaders in your area</li>
+                    <li>🛒 <strong>Browse Fresh Produce:</strong> Shop for seasonal fruits, vegetables, and artisanal goods</li>
+                    <li>📍 <strong>Location-Based Search:</strong> Find the closest shops using our interactive map</li>
+                    <li>⭐ <strong>Reviews & Ratings:</strong> Help others discover great local vendors</li>
+                    {% if user.is_seller %}
+                    <li>🏪 <strong>Sell Your Products:</strong> Create your own shop and reach local customers</li>
+                    <li>📱 <strong>Manage Your Business:</strong> Update products, hours, and availability in real-time</li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="message">
+                <p>If you didn't create an account with Local Basket, please ignore this email.</p>
+                
+                <p>Thanks for supporting local agriculture and sustainable food systems!</p>
+                
+                <p>Best regards,<br>
+                The Local Basket Team</p>
+            </div>
+        </div>
+        
+        <div class="email-footer">
+            <p>&copy; 2024 Local Basket. All rights reserved.</p>
+            <p>Connecting communities through local food.</p>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Unsubscribe</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" title="Facebook">f</a>
+                <a href="#" title="Twitter">t</a>
+                <a href="#" title="Instagram">i</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

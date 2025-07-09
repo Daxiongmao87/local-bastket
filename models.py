@@ -46,7 +46,7 @@ class Shop(db.Model):
     email = db.Column(db.String(120))
     website = db.Column(db.String(200))
     is_active = db.Column(db.Boolean, default=True)
-    is_open = db.Column(db.Boolean, default=True)
+    is_open = db.Column(db.Boolean, default=False)  # Closed by default as specified
     hours_monday = db.Column(db.String(50))
     hours_tuesday = db.Column(db.String(50))
     hours_wednesday = db.Column(db.String(50))
@@ -96,6 +96,33 @@ class Product(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     shop_id = db.Column(db.Integer, db.ForeignKey('shops.id'), nullable=False)
+    
+    @classmethod
+    def get_category_icons(cls):
+        """Get predefined category icons as specified in DEVELOPMENT.md"""
+        return {
+            'eggs': 'fas fa-egg',
+            'vegetables': 'fas fa-carrot',
+            'peppers': 'fas fa-pepper-hot', 
+            'fruits': 'fas fa-apple-alt',
+            'citrus': 'fas fa-lemon',
+            'meat': 'fas fa-drumstick-bite',
+            'dairy': 'fas fa-cheese',
+            'bread': 'fas fa-bread-slice',
+            'honey': 'fas fa-honey-pot',
+            'firewood': 'fas fa-fire',
+            'lumber': 'fas fa-tree',
+            'herbs': 'fas fa-seedling',
+            'leafy_greens': 'fas fa-leaf',
+            'flowers': 'fas fa-flower',
+            'roses': 'fas fa-rose',
+            'preserves': 'fas fa-jar',
+            'wine': 'fas fa-wine-bottle',
+            'beverages': 'fas fa-coffee',
+            'fish': 'fas fa-fish',
+            'tools': 'fas fa-hammer',
+            'equipment': 'fas fa-tools',
+        }
     
     def __repr__(self):
         return f'<Product {self.name}>'

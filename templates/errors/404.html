@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Local Basket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="error-page">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-shopping-basket"></i>
+                    <span class="error-code">404</span>
+                </div>
+                
+                <h1 class="error-title">Oops! Page Not Found</h1>
+                
+                <p class="error-message">
+                    The page you're looking for seems to have wandered off like a lost shopper at the farmer's market. 
+                    Don't worry, we'll help you find your way back to the good stuff!
+                </p>
+                
+                <div class="error-suggestions">
+                    <h3>Here are some suggestions:</h3>
+                    <ul>
+                        <li><i class="fas fa-home"></i> Go back to the <a href="{{ url_for('index') }}">homepage</a></li>
+                        <li><i class="fas fa-search"></i> Try our <a href="{{ url_for('search') }}">search feature</a></li>
+                        <li><i class="fas fa-map"></i> Browse shops on our <a href="{{ url_for('map_view') }}">map</a></li>
+                        <li><i class="fas fa-arrow-left"></i> Go <a href="javascript:history.back()">back to the previous page</a></li>
+                    </ul>
+                </div>
+                
+                <div class="error-actions">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                    <a href="{{ url_for('search') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> Search Shops
+                    </a>
+                </div>
+            </div>
+            
+            <div class="error-illustration">
+                <div class="basket-illustration">
+                    <i class="fas fa-shopping-basket"></i>
+                    <div class="basket-items">
+                        <i class="fas fa-apple-alt"></i>
+                        <i class="fas fa-carrot"></i>
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .error-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl) 0;
+            gap: var(--spacing-4xl);
+        }
+
+        .error-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .error-icon {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-icon i {
+            font-size: 4rem;
+            color: var(--primary-color);
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: var(--font-size-3xl);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-base);
+        }
+
+        .error-message {
+            font-size: var(--font-size-lg);
+            color: var(--text-color);
+            line-height: var(--line-height-loose);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-suggestions {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-suggestions h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-base);
+            color: var(--primary-dark);
+        }
+
+        .error-suggestions ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error-suggestions li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-base);
+        }
+
+        .error-suggestions li i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .error-suggestions a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .error-suggestions a:hover {
+            text-decoration: underline;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--spacing-base);
+            flex-wrap: wrap;
+        }
+
+        .error-illustration {
+            flex: 0 0 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .basket-illustration {
+            position: relative;
+            text-align: center;
+        }
+
+        .basket-illustration > i {
+            font-size: 12rem;
+            color: var(--secondary-color);
+            opacity: 0.3;
+        }
+
+        .basket-items {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .basket-items i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .basket-items i:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .basket-items i:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .error-page {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-xl);
+            }
+
+            .error-icon {
+                justify-content: center;
+            }
+
+            .error-code {
+                font-size: 4rem;
+            }
+
+            .error-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .error-illustration {
+                flex: none;
+            }
+
+            .basket-illustration > i {
+                font-size: 8rem;
+            }
+
+            .error-actions {
+                justify-content: center;
+            }
+
+            .error-actions .btn {
+                flex: 1;
+                min-width: 150px;
+            }
+        }
+    </style>
+</body>
+</html>

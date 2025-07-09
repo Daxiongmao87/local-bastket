@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Local Basket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="offline-page">
+            <div class="offline-content">
+                <div class="offline-icon">
+                    <i class="fas fa-wifi"></i>
+                    <span class="offline-indicator">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </div>
+                
+                <h1 class="offline-title">You're Offline</h1>
+                
+                <p class="offline-message">
+                    Looks like you've lost your connection to the digital farmer's market. 
+                    Don't worry - some features are still available offline!
+                </p>
+                
+                <div class="offline-features">
+                    <h3>What you can still do:</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-eye"></i> 
+                            View previously visited shop pages
+                        </li>
+                        <li>
+                            <i class="fas fa-bookmark"></i> 
+                            Browse cached shop information
+                        </li>
+                        <li>
+                            <i class="fas fa-heart"></i> 
+                            View your saved favorites
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marked-alt"></i> 
+                            See recently viewed locations
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="offline-actions">
+                    <button onclick="checkConnection()" class="btn btn-primary">
+                        <i class="fas fa-sync"></i> Check Connection
+                    </button>
+                    <button onclick="goBack()" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left"></i> Go Back
+                    </button>
+                </div>
+                
+                <div class="connection-status" id="connection-status">
+                    <p class="status-text">
+                        <i class="fas fa-circle" id="status-indicator"></i>
+                        <span id="status-message">Checking connection...</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="offline-illustration">
+                <div class="connection-illustration">
+                    <div class="device">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="screen">
+                            <div class="signal-bars">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wifi-waves">
+                        <div class="wave wave-1"></div>
+                        <div class="wave wave-2"></div>
+                        <div class="wave wave-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .offline-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl) 0;
+            gap: var(--spacing-4xl);
+        }
+
+        .offline-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .offline-icon {
+            position: relative;
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .offline-icon > i {
+            font-size: 4rem;
+            color: var(--text-muted);
+        }
+
+        .offline-indicator {
+            position: absolute;
+            top: -10px;
+            right: calc(50% - 40px);
+            background-color: var(--error-color);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .offline-title {
+            font-size: var(--font-size-3xl);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-base);
+            text-align: center;
+        }
+
+        .offline-message {
+            font-size: var(--font-size-lg);
+            color: var(--text-color);
+            line-height: var(--line-height-loose);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .offline-features {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .offline-features h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-base);
+            color: var(--primary-dark);
+        }
+
+        .offline-features ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .offline-features li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-base);
+            color: var(--text-color);
+        }
+
+        .offline-features li i {
+            color: var(--primary-color);
+            width: 20px;
+        }
+
+        .offline-actions {
+            display: flex;
+            gap: var(--spacing-base);
+            justify-content: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+
+        .connection-status {
+            text-align: center;
+            padding: var(--spacing-base);
+            background-color: var(--background-light);
+            border-radius: var(--border-radius-base);
+            border: var(--border-width-thin) solid var(--border-color);
+        }
+
+        .status-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin: 0;
+            font-size: var(--font-size-sm);
+        }
+
+        #status-indicator {
+            font-size: var(--font-size-xs);
+        }
+
+        #status-indicator.online {
+            color: var(--success-color);
+        }
+
+        #status-indicator.offline {
+            color: var(--error-color);
+        }
+
+        .offline-illustration {
+            flex: 0 0 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .connection-illustration {
+            position: relative;
+            text-align: center;
+        }
+
+        .device {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .device > i {
+            font-size: 6rem;
+            color: var(--text-muted);
+        }
+
+        .screen {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 60%;
+            background-color: var(--background-dark);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+            align-items: end;
+        }
+
+        .bar {
+            width: 4px;
+            background-color: var(--error-color);
+            border-radius: 2px;
+        }
+
+        .bar:nth-child(1) { height: 8px; }
+        .bar:nth-child(2) { height: 12px; }
+        .bar:nth-child(3) { height: 16px; }
+        .bar:nth-child(4) { height: 20px; }
+
+        .wifi-waves {
+            position: relative;
+            height: 100px;
+        }
+
+        .wave {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            border: 2px solid var(--error-color);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .wave-1 {
+            width: 40px;
+            height: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        .wave-2 {
+            width: 60px;
+            height: 60px;
+            animation: pulse 2s infinite 0.5s;
+        }
+
+        .wave-3 {
+            width: 80px;
+            height: 80px;
+            animation: pulse 2s infinite 1s;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 0.1;
+                transform: translateX(-50%) scale(1.1);
+            }
+        }
+
+        .online .wave {
+            border-color: var(--success-color);
+        }
+
+        .online .bar {
+            background-color: var(--success-color);
+        }
+
+        @media (max-width: 768px) {
+            .offline-page {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-xl);
+            }
+
+            .offline-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .offline-illustration {
+                flex: none;
+            }
+
+            .device > i {
+                font-size: 4rem;
+            }
+
+            .offline-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .offline-actions .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+
+    <script>
+        // Check connection status
+        function checkConnection() {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusMessage = document.getElementById('status-message');
+            const illustration = document.querySelector('.connection-illustration');
+            
+            statusMessage.textContent = 'Checking connection...';
+            statusIndicator.className = 'fas fa-circle';
+            
+            // Try to fetch a small resource to test connection
+            fetch('/api/health-check', { 
+                method: 'HEAD',
+                cache: 'no-cache'
+            })
+            .then(response => {
+                if (response.ok) {
+                    statusIndicator.className = 'fas fa-circle online';
+                    statusMessage.textContent = 'Connection restored!';
+                    illustration.classList.add('online');
+                    
+                    // Redirect to home page after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    throw new Error('Connection failed');
+                }
+            })
+            .catch(() => {
+                statusIndicator.className = 'fas fa-circle offline';
+                statusMessage.textContent = 'Still offline';
+                illustration.classList.remove('online');
+            });
+        }
+
+        // Go back to previous page
+        function goBack() {
+            if (history.length > 1) {
+                history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // Listen for online/offline events
+        window.addEventListener('online', () => {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusMessage = document.getElementById('status-message');
+            const illustration = document.querySelector('.connection-illustration');
+            
+            statusIndicator.className = 'fas fa-circle online';
+            statusMessage.textContent = 'Connection restored!';
+            illustration.classList.add('online');
+            
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        });
+
+        window.addEventListener('offline', () => {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusMessage = document.getElementById('status-message');
+            const illustration = document.querySelector('.connection-illustration');
+            
+            statusIndicator.className = 'fas fa-circle offline';
+            statusMessage.textContent = 'Connection lost';
+            illustration.classList.remove('online');
+        });
+
+        // Initial connection check
+        document.addEventListener('DOMContentLoaded', () => {
+            checkConnection();
+        });
+    </script>
+</body>
+</html>

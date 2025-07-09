@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error - Local Basket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="error-page">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-tools"></i>
+                    <span class="error-code">500</span>
+                </div>
+                
+                <h1 class="error-title">Something Went Wrong</h1>
+                
+                <p class="error-message">
+                    We're experiencing some technical difficulties in our digital farmer's market. 
+                    Our team of tech-savvy farmers is working hard to fix the issue and get you back 
+                    to discovering amazing local produce!
+                </p>
+                
+                <div class="error-suggestions">
+                    <h3>What you can do:</h3>
+                    <ul>
+                        <li><i class="fas fa-refresh"></i> Try <a href="javascript:location.reload()">refreshing the page</a></li>
+                        <li><i class="fas fa-clock"></i> Wait a few minutes and try again</li>
+                        <li><i class="fas fa-home"></i> Go back to the <a href="{{ url_for('index') }}">homepage</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:support@localbasket.com">Contact support</a> if the problem persists</li>
+                    </ul>
+                </div>
+                
+                <div class="error-actions">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                    <button onclick="location.reload()" class="btn btn-outline-primary">
+                        <i class="fas fa-refresh"></i> Try Again
+                    </button>
+                </div>
+            </div>
+            
+            <div class="error-illustration">
+                <div class="maintenance-illustration">
+                    <div class="farmer-icon">
+                        <i class="fas fa-user-alt"></i>
+                        <div class="farmer-hat">
+                            <i class="fas fa-hat-cowboy"></i>
+                        </div>
+                    </div>
+                    <div class="tools">
+                        <i class="fas fa-wrench"></i>
+                        <i class="fas fa-screwdriver"></i>
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <p class="maintenance-text">Fixing things up...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .error-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl) 0;
+            gap: var(--spacing-4xl);
+        }
+
+        .error-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .error-icon {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-icon i {
+            font-size: 4rem;
+            color: var(--warning-color);
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--warning-color);
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: var(--font-size-3xl);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-base);
+        }
+
+        .error-message {
+            font-size: var(--font-size-lg);
+            color: var(--text-color);
+            line-height: var(--line-height-loose);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-suggestions {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .error-suggestions h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-base);
+            color: var(--primary-dark);
+        }
+
+        .error-suggestions ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error-suggestions li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-base);
+        }
+
+        .error-suggestions li i {
+            color: var(--warning-color);
+            width: 20px;
+        }
+
+        .error-suggestions a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .error-suggestions a:hover {
+            text-decoration: underline;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--spacing-base);
+            flex-wrap: wrap;
+        }
+
+        .error-illustration {
+            flex: 0 0 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .maintenance-illustration {
+            text-align: center;
+            position: relative;
+        }
+
+        .farmer-icon {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .farmer-icon > i {
+            font-size: 6rem;
+            color: var(--secondary-color);
+            opacity: 0.7;
+        }
+
+        .farmer-hat {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .farmer-hat i {
+            font-size: 3rem;
+            color: var(--secondary-dark);
+            opacity: 0.8;
+        }
+
+        .tools {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-base);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tools i {
+            font-size: 2rem;
+            color: var(--warning-color);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        .tools i:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .tools i:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: var(--border-radius-full);
+            overflow: hidden;
+            margin: 0 auto var(--spacing-base);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: var(--border-radius-full);
+            width: 0%;
+            animation: progress 3s ease-in-out infinite;
+        }
+
+        .maintenance-text {
+            font-size: var(--font-size-sm);
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 70%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-page {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-xl);
+            }
+
+            .error-icon {
+                justify-content: center;
+            }
+
+            .error-code {
+                font-size: 4rem;
+            }
+
+            .error-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .error-illustration {
+                flex: none;
+            }
+
+            .farmer-icon > i {
+                font-size: 4rem;
+            }
+
+            .error-actions {
+                justify-content: center;
+            }
+
+            .error-actions .btn {
+                flex: 1;
+                min-width: 150px;
+            }
+        }
+    </style>
+</body>
+</html>

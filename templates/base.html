@@ -26,7 +26,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
                 <i class="fas fa-shopping-basket me-2"></i>Local Basket
             </a>
             
@@ -37,17 +37,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">
+                        <a class="nav-link" href="{{ url_for('main.index') }}">
                             <i class="fas fa-home me-1"></i>Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('map_view') }}">
+                        <a class="nav-link" href="{{ url_for('main.map_view') }}">
                             <i class="fas fa-map me-1"></i>Map
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('search') }}">
+                        <a class="nav-link" href="{{ url_for('main.search') }}">
                             <i class="fas fa-search me-1"></i>Search
                         </a>
                     </li>
@@ -60,27 +60,27 @@
                                 <i class="fas fa-user me-1"></i>{{ current_user.username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}">Profile</a></li>
                                 {% if current_user.is_seller %}
                                     {% if current_user.shop %}
-                                        <li><a class="dropdown-item" href="{{ url_for('view_shop', shop_id=current_user.shop.id) }}">My Shop</a></li>
-                                        <li><a class="dropdown-item" href="{{ url_for('edit_shop', shop_id=current_user.shop.id) }}">Edit Shop</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('shop.view_shop', shop_id=current_user.shop.id) }}">My Shop</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('shop.edit_shop', shop_id=current_user.shop.id) }}">Edit Shop</a></li>
                                     {% else %}
-                                        <li><a class="dropdown-item" href="{{ url_for('create_shop') }}">Create Shop</a></li>
+                                        <li><a class="dropdown-item" href="{{ url_for('shop.create_shop') }}">Create Shop</a></li>
                                     {% endif %}
                                 {% endif %}
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">
                                 <i class="fas fa-sign-in-alt me-1"></i>Login
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register') }}">
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">
                                 <i class="fas fa-user-plus me-1"></i>Register
                             </a>
                         </li>
@@ -115,11 +115,11 @@
                 <div class="col-md-6">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url_for('index') }}" class="text-light">Home</a></li>
-                        <li><a href="{{ url_for('map_view') }}" class="text-light">Find Sellers</a></li>
-                        <li><a href="{{ url_for('search') }}" class="text-light">Search</a></li>
+                        <li><a href="{{ url_for('main.index') }}" class="text-light">Home</a></li>
+                        <li><a href="{{ url_for('main.map_view') }}" class="text-light">Find Sellers</a></li>
+                        <li><a href="{{ url_for('main.search') }}" class="text-light">Search</a></li>
                         {% if not current_user.is_authenticated %}
-                            <li><a href="{{ url_for('register') }}" class="text-light">Become a Seller</a></li>
+                            <li><a href="{{ url_for('auth.register') }}" class="text-light">Become a Seller</a></li>
                         {% endif %}
                     </ul>
                 </div>
