@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Add Product - Local Basket{% endblock %}
+{% block title %}Add Product - Local Fare{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -161,15 +161,15 @@
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-check-circle text-success me-2"></i>
-                        Include details about freshness
+                        Include details about freshness and quality
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-check-circle text-success me-2"></i>
-                        Specify organic/non-organic
+                        Mention if grown organically or naturally
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-check-circle text-success me-2"></i>
-                        Add harvest or production date
+                        Add when harvested or made
                     </li>
                     <li class="mb-2">
                         <i class="fas fa-check-circle text-success me-2"></i>
@@ -205,6 +205,12 @@
                     <span class="badge bg-dark">
                         <i class="fas fa-seedling me-1"></i>Herbs
                     </span>
+                    <span class="badge bg-warning">
+                        <i class="fas fa-hammer me-1"></i>Crafts
+                    </span>
+                    <span class="badge bg-info">
+                        <i class="fas fa-fire me-1"></i>Firewood
+                    </span>
                 </div>
             </div>
         </div>
@@ -218,10 +224,10 @@
             <div class="card-body">
                 <p class="small text-muted mb-2">Consider these factors when pricing:</p>
                 <ul class="list-unstyled small">
-                    <li>• Cost of production</li>
+                    <li>• Cost of materials and time</li>
                     <li>• Local market rates</li>
                     <li>• Quality and freshness</li>
-                    <li>• Organic certification</li>
+                    <li>• Organic or natural methods</li>
                     <li>• Seasonal availability</li>
                 </ul>
             </div>

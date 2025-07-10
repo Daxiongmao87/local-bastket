@@ -1,4 +1,4 @@
-/* Main application styles - Farmer's Market Theme */
+/* Main application styles - Local Fare Theme */
 @import url('variables.css');
 @import url('base.css');
 @import url('components.css');
@@ -15,13 +15,13 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--basket-brown), var(--harvest-gold));
-  color: var(--background-light);
+  background: linear-gradient(135deg, var(--home-green), var(--harvest-orange));
+  color: #FFFFFF;
   padding: var(--spacing-4xl) 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-  border-bottom: var(--border-width-thick) solid var(--earth-brown);
+  border-bottom: var(--border-width-base) solid var(--primary-dark);
 }
 
 .hero::before {
@@ -31,9 +31,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
-  background-size: 50px 50px;
-  opacity: 0.3;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1.5" fill="rgba(255,255,255,0.08)"/></svg>') repeat;
+  background-size: 40px 40px;
+  opacity: 0.4;
 }
 
 .hero-content {
@@ -44,16 +44,19 @@
 .hero-title {
   font-family: var(--font-family-accent);
   font-size: var(--font-size-5xl);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-extra-bold);
   margin-bottom: var(--spacing-base);
-  text-shadow: 3px 3px 6px rgba(62, 39, 35, 0.4);
-  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
 }
 
 .hero-subtitle {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-xl);
-  opacity: 0.9;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  font-weight: var(--font-weight-medium);
 }
 
 .hero-buttons {
@@ -72,14 +75,17 @@
 }
 
 .hero-buttons .btn-light {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   color: var(--primary-color);
-  border-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.95);
+  font-weight: var(--font-weight-semibold);
 }
 
 .hero-buttons .btn-light:hover {
-  background-color: white;
+  background-color: #FFFFFF;
   transform: translateY(-2px);
+  color: var(--primary-dark);
+  font-weight: var(--font-weight-bold);
 }
 
 /* Shop cards */
@@ -107,14 +113,14 @@
 .shop-card-header {
   position: relative;
   height: 200px;
-  background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+  background: linear-gradient(135deg, var(--primary-color), var(--garden-sage));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #FFFFFF;
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .shop-card-body {
@@ -122,8 +128,9 @@
 }
 
 .shop-card-title {
-  color: var(--primary-dark);
+  color: var(--text-color);
   margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 .shop-card-text {
@@ -253,14 +260,14 @@
 
 .map-placeholder {
   height: 100%;
-  background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+  background: linear-gradient(135deg, var(--primary-color), var(--nature-teal));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #FFFFFF;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Search filters */
@@ -340,33 +347,40 @@
 /* Bootstrap overrides for badges */
 .badge {
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--border-radius-base);
+  color: #FFFFFF;
 }
 
 .badge.bg-success {
   background-color: var(--success-color) !important;
+  color: #FFFFFF !important;
 }
 
 .badge.bg-danger {
   background-color: var(--error-color) !important;
+  color: #FFFFFF !important;
 }
 
 .badge.bg-primary {
   background-color: var(--primary-color) !important;
+  color: #FFFFFF !important;
 }
 
 .badge.bg-secondary {
   background-color: var(--secondary-color) !important;
+  color: #FFFFFF !important;
 }
 
 .badge.bg-warning {
   background-color: var(--warning-color) !important;
+  color: #FFFFFF !important;
 }
 
 .badge.bg-info {
   background-color: var(--info-color) !important;
+  color: #FFFFFF !important;
 }
 
 /* Bootstrap button overrides */

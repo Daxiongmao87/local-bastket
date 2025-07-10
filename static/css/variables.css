@@ -1,41 +1,41 @@
-/* CSS Custom Properties (Variables) - Farmer's Market Theme */
+/* CSS Custom Properties (Variables) - Local Fare Theme */
 :root {
-  /* Colors - Earthy and Organic Palette (per DEVELOPMENT.md specs) */
-  --primary-color: #8B4513;            /* Saddle brown (main brand color) */
-  --primary-light: #A0522D;            /* Sienna */
-  --primary-dark: #654321;             /* Dark brown */
+  /* Colors - Modern Organic Palette */
+  --primary-color: #2E7D32;            /* Forest green (main brand color) */
+  --primary-light: #4CAF50;            /* Medium green */
+  --primary-dark: #1B5E20;             /* Dark forest green */
   
-  --secondary-color: #228B22;          /* Forest green */
-  --secondary-light: #32CD32;          /* Lime green */
-  --secondary-dark: #006400;           /* Dark green */
+  --secondary-color: #5D4037;          /* Warm brown (reduced usage) */
+  --secondary-light: #8D6E63;          /* Light brown */
+  --secondary-dark: #3E2723;           /* Dark brown */
   
-  --accent-color: #DAA520;             /* Goldenrod */
-  --accent-light: #FFD700;             /* Gold */
-  --accent-dark: #B8860B;              /* Dark goldenrod */
+  --accent-color: #FF6F00;             /* Warm orange */
+  --accent-light: #FF9800;             /* Light orange */
+  --accent-dark: #E65100;              /* Dark orange */
   
-  --background-color: #FDF5E6;         /* Old lace (warm cream) */
-  --background-light: #FFFEF7;         /* Ivory */
-  --background-dark: #F5DEB3;          /* Wheat */
+  --background-color: #FAFAFA;         /* Clean white */
+  --background-light: #FFFFFF;         /* Pure white */
+  --background-dark: #F5F5F5;          /* Light gray */
   
-  --text-color: #3E2723;               /* Dark brown (earthy) */
-  --text-light: #5D4037;               /* Medium brown */
-  --text-muted: #8D6E63;               /* Light brown */
+  --text-color: #212121;               /* Dark gray (high contrast) */
+  --text-light: #424242;               /* Medium gray */
+  --text-muted: #757575;               /* Light gray */
   
-  --border-color: #D7CCC8;             /* Light brown */
-  --border-light: #EFEBE9;             /* Very light brown */
-  --border-dark: #A1887F;              /* Medium brown */
+  --border-color: #E0E0E0;             /* Light gray */
+  --border-light: #F5F5F5;             /* Very light gray */
+  --border-dark: #BDBDBD;              /* Medium gray */
   
-  /* Status colors with earthy tones */
-  --success-color: #228B22;            /* Forest green (same as secondary) */
-  --warning-color: #FF8C00;            /* Dark orange */
-  --error-color: #CD5C5C;              /* Indian red */
-  --info-color: #708090;               /* Slate gray */
+  /* Status colors - modern and accessible */
+  --success-color: #4CAF50;            /* Green */
+  --warning-color: #FF9800;            /* Orange */
+  --error-color: #F44336;              /* Red */
+  --info-color: #2196F3;               /* Blue */
   
-  /* Typography - Artisan/Farmer's Market Style */
-  --font-family-primary: 'Crimson Text', 'Georgia', 'Times New Roman', serif;  /* Artisan serif */
-  --font-family-secondary: 'Cabin', 'Trebuchet MS', 'Lucida Grande', sans-serif; /* Rustic sans-serif */
-  --font-family-accent: 'Amatic SC', 'Comic Sans MS', cursive; /* Hand-lettered style for headers */
-  --font-family-mono: 'Courier New', monospace;
+  /* Typography - Modern and Readable */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;  /* Modern sans-serif */
+  --font-family-secondary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Friendly sans-serif */
+  --font-family-accent: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Rounded for headers */
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
   
   --font-size-xs: 0.75rem;             /* 12px */
   --font-size-sm: 0.875rem;            /* 14px */
@@ -45,14 +45,14 @@
   --font-size-2xl: 1.5rem;             /* 24px */
   --font-size-3xl: 1.875rem;           /* 30px */
   --font-size-4xl: 2.25rem;            /* 36px */
-  --font-size-5xl: 3rem;               /* 48px - for farmer's market style headers */
+  --font-size-5xl: 3rem;               /* 48px - for large headers */
   
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --font-weight-extra-bold: 800;       /* For market-style emphasis */
+  --font-weight-extra-bold: 800;       /* For strong emphasis */
   
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
@@ -80,12 +80,12 @@
   --border-width-thick: 3px;
   --border-width-extra-thick: 4px;     /* For rustic borders */
   
-  /* Shadows - Softer, more organic */
-  --shadow-sm: 0 1px 3px rgba(139, 69, 19, 0.1);
-  --shadow-base: 0 2px 6px rgba(139, 69, 19, 0.1), 0 1px 3px rgba(139, 69, 19, 0.08);
-  --shadow-lg: 0 8px 25px rgba(139, 69, 19, 0.1), 0 3px 10px rgba(139, 69, 19, 0.08);
-  --shadow-xl: 0 20px 40px rgba(139, 69, 19, 0.1), 0 8px 16px rgba(139, 69, 19, 0.08);
-  --shadow-inner: inset 0 2px 4px rgba(139, 69, 19, 0.1);
+  /* Shadows - Modern and subtle */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.1);
   
   /* Transitions */
   --transition-fast: 0.15s ease;
@@ -115,18 +115,18 @@
   --container-xl: 1140px;
   --container-2xl: 1320px;
   
-  /* Farmer's Market specific colors */
-  --basket-brown: #8B4513;             /* Main basket color */
-  --fresh-green: #228B22;              /* Fresh produce */
-  --harvest-gold: #DAA520;             /* Harvest time */
-  --barn-red: #B22222;                 /* Classic barn red */
-  --wheat-beige: #F5DEB3;              /* Wheat field */
-  --earth-brown: #654321;              /* Rich soil */
-  --sage-green: #9CAF88;               /* Herb garden */
-  --pumpkin-orange: #FF7518;           /* Autumn harvest */
-  --corn-yellow: #FFDB58;              /* Corn silk */
-  --apple-red: #DC143C;                /* Fresh apples */
+  /* Local Fare specific colors */
+  --home-green: #2E7D32;               /* Main home-grown color */
+  --fresh-green: #4CAF50;              /* Fresh produce */
+  --harvest-orange: #FF6F00;           /* Harvest time */
+  --garden-sage: #81C784;              /* Herb garden */
+  --earth-brown: #5D4037;              /* Rich soil (minimal usage) */
+  --nature-teal: #00695C;              /* Natural complement */
+  --sunshine-yellow: #FFC107;          /* Sunshine */
+  --berry-red: #E53935;                /* Fresh berries */
+  --cream-white: #FAFAFA;              /* Clean base */
+  --stone-gray: #9E9E9E;               /* Natural stone */
 }
 
-/* Import Google Fonts for artisan typography */
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+/* Import Google Fonts for modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');

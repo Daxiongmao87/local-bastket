@@ -20,11 +20,12 @@ body {
   font-family: var(--font-family-primary);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height-loose);
   color: var(--text-color);
   background-color: var(--background-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
 }
 
 /* Typography */
@@ -32,17 +33,20 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-secondary);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  color: var(--primary-dark);
-  margin-bottom: var(--spacing-base);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.01em;
 }
 
 h1 {
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-xl);
 }
 
 h2 {
   font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 h3 {
@@ -62,8 +66,9 @@ h6 {
 }
 
 p {
-  margin-bottom: var(--spacing-base);
+  margin-bottom: var(--spacing-lg);
   color: var(--text-color);
+  line-height: var(--line-height-loose);
 }
 
 a {
