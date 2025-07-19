@@ -1,0 +1,3 @@
+[submodule "youtube-music-lidarr-list-provider"]
+	path = youtube-music-lidarr-list-provider
+	url = https://github.com/Daxiongmao87/youtube-music-lidarr-list-provider.git
