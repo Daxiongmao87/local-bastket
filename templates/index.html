@@ -25,43 +25,63 @@
         <h2 class="mb-4">Featured Home Producers</h2>
         
         {% if shops %}
-            <div class="shop-grid">
+            <div class="shop-list">
                 {% for shop in shops %}
-                    <div class="col-md-6 mb-4">
-                        <div class="shop-card">
-                            <div class="shop-card-header">
-                                {% if shop.banner_image %}
-                                    <img src="{{ shop.banner_image }}" alt="{{ shop.name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                {% else %}
-                                    <i class="fas fa-store"></i>
-                                {% endif %}
-                            </div>
-                            <div class="shop-card-body">
-                                <h5 class="shop-card-title">
-                                    {{ shop.name }}
-                                </h5>
-                                <p class="shop-card-text">{{ shop.description[:100] }}{% if shop.description|length > 100 %}...{% endif %}</p>
-                                <div class="shop-rating">
-                                    {% if shop.average_rating > 0 %}
-                                        <div class="stars">
-                                            {% for i in range(5) %}
-                                                {% if i < shop.average_rating %}
-                                                    <i class="fas fa-star"></i>
-                                                {% else %}
-                                                    <i class="far fa-star"></i>
-                                                {% endif %}
-                                            {% endfor %}
+                    <div class="shop-list-item mb-4">
+                        <div class="row g-0">
+                            <div class="col-md-3">
+                                <div class="shop-list-item-image">
+                                    {% if shop.banner_image %}
+                                        <img src="{{ shop.banner_image }}" alt="{{ shop.name }}" class="img-fluid rounded-start">
+                                    {% else %}
+                                        <div class="placeholder-image">
+                                            <i class="fas fa-store"></i>
                                         </div>
-                                        <small class="text-muted">({{ shop.total_reviews }})</small>
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="shop-card-footer">
-                                <div class="shop-status">
-                                    <div class="shop-status-indicator {% if not shop.is_open %}closed{% endif %}"></div>
-                                    <span>{% if shop.is_open %}Open{% else %}Closed{% endif %}</span>
+                            <div class="col-md-9">
+                                <div class="shop-list-item-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h5 class="shop-list-item-title">{{ shop.name }}</h5>
+                                        <div class="shop-status">
+                                            <div class="shop-status-indicator {% if not shop.is_open %}closed{% endif %}"></div>
+                                            <span>{% if shop.is_open %}Open{% else %}Closed{% endif %}</span>
+                                        </div>
+                                    </div>
+                                    <p class="shop-list-item-text text-muted mb-2">{{ shop.address }}</p>
+                                    <p class="shop-list-item-text">{{ shop.description }}</p>
+                                    
+                                    <div class="shop-details d-flex flex-wrap">
+                                        <div class="shop-rating me-4">
+                                            {% if shop.average_rating > 0 %}
+                                                <div class="stars">
+                                                    {% for i in range(5) %}
+                                                        {% if i < shop.average_rating %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <small class="text-muted">({{ shop.total_reviews }} reviews)</small>
+                                            {% else %}
+                                                <small class="text-muted">No reviews yet</small>
+                                            {% endif %}
+                                        </div>
+                                        <div class="shop-payment-methods me-4">
+                                            <strong class="me-2">Payments:</strong>
+                                            {% if shop.payment_cash %}<i class="fas fa-money-bill-wave me-2" title="Cash"></i>{% endif %}
+                                            {% if shop.payment_venmo %}<i class="fab fa-vimeo-v me-2" title="Venmo"></i>{% endif %}
+                                            {% if shop.payment_paypal %}<i class="fab fa-paypal me-2" title="PayPal"></i>{% endif %}
+                                            {% if shop.payment_zelle %}<i class="fas fa-mobile-alt me-2" title="Zelle"></i>{% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="shop-list-item-footer mt-3">
+                                        <a href="{{ url_for('shop.view_shop', shop_id=shop.id) }}" class="btn btn-primary btn-sm">View Shop & Products</a>
+                                    </div>
                                 </div>
-                                <a href="{{ url_for('shop.view_shop', shop_id=shop.id) }}" class="btn btn-primary btn-sm">View Shop</a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,85 @@
+/* Alert Components */
+@import url('variables.css');
+
+/* Alert System */
+.alerts {
+  position: fixed;
+  top: var(--spacing-base);
+  right: var(--spacing-base);
+  z-index: var(--z-modal);
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.alert {
+  background-color: var(--background-light);
+  border: var(--border-width-thin) solid var(--border-color);
+  border-radius: var(--border-radius-base);
+  padding: var(--spacing-base);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  pointer-events: all;
+  animation: slideInAlert 0.3s ease-out;
+}
+
+.alert--success {
+  background-color: rgba(47, 79, 47, 0.1);
+  border-color: var(--craft-green);
+  color: var(--craft-green);
+}
+
+.alert--warning {
+  background-color: rgba(210, 180, 140, 0.1);
+  border-color: var(--craft-brass);
+  color: var(--craft-tan);
+}
+
+.alert--error {
+  background-color: rgba(139, 69, 19, 0.1);
+  border-color: var(--craft-earth);
+  color: var(--craft-earth);
+}
+
+.alert--info {
+  background-color: rgba(107, 142, 107, 0.1);
+  border-color: var(--craft-sage);
+  color: var(--craft-sage);
+}
+
+.alert__close {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-base);
+  color: inherit;
+}
+
+.alert__close:hover {
+  opacity: 1;
+}
+
+@keyframes slideInAlert {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Alerts */
+@media (max-width: 768px) {
+  .alerts {
+    left: var(--spacing-base);
+    right: var(--spacing-base);
+    max-width: none;
+  }
+}

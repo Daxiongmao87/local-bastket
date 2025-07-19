@@ -1,0 +1,14 @@
+my_project/
+│
+├── src/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── calculator.py
+│   └── utils.py
+│
+├── tests/
+│   ├── __init__.py
+│   └── test_calculator.py
+│
+├── requirements.txt
+└── README.md
