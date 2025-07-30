@@ -32,7 +32,7 @@
                             <div class="col-md-3">
                                 <div class="shop-list-item-image">
                                     {% if shop.banner_image %}
-                                        <img src="{{ shop.banner_image }}" alt="{{ shop.name }}" class="img-fluid rounded-start">
+                                        <img src="{{ url_for('static', filename=shop.banner_image) }}" alt="{{ shop.name }}" class="img-fluid rounded-start">
                                     {% else %}
                                         <div class="placeholder-image">
                                             <i class="fas fa-store"></i>

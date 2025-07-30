@@ -4,44 +4,178 @@
 
 {% block head %}
 <style>
+/* Full screen layout styles - override main.css */
+body.map-view .map-container {
+    height: calc(100vh - var(--navbar-height));
+    width: 100vw;
+    background: white;
+    display: flex;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+}
+
+.producer-panel {
+    width: 400px;
+    min-width: 300px;
+    max-width: 500px;
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.producer-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.map-area {
+    flex: 1;
+    position: relative;
+}
+
 #map {
-    height: 500px;
+    height: 100%;
     width: 100%;
+}
+
+
+.producer-card {
+    background: white;
+    border: 1px solid #dee2e6;
     border-radius: 0.375rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.producer-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+
+.producer-card .card-body {
+    padding: 1rem;
+}
+
+.producer-card .card-footer {
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Mobile hamburger menu */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: calc(var(--navbar-height) + 80px);
+    left: 10px;
+    width: 48px;
+    z-index: 1;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .producer-panel {
+        position: fixed;
+        top: var(--navbar-height);
+        left: 0;
+        width: 300px;
+        height: calc(100vh - var(--navbar-height));
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+    
+    .producer-panel.show {
+        transform: translateX(0);
+    }
+    
+    .map-area {
+        width: 100%;
+    }
+    
+    .map-overlay {
+        display: none;
+        position: fixed;
+        top: var(--navbar-height);
+        left: 0;
+        width: 100%;
+        height: calc(100vh - var(--navbar-height));
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+    }
+    
+    .map-overlay.show {
+        display: block;
+    }
+}
+
+/* Full screen override for map view */
+body.map-view {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
+}
+
+body.map-view .container {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+body.map-view main.container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+}
+
+body.map-view .footer {
+    display: none !important;
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title mb-0">
-                    <i class="fas fa-map-marker-alt me-2"></i>Find Home Producers
-                </h4>
-            </div>
-            <div class="card-body">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Mobile Menu Toggle -->
+<button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle producer list">
+    <i class="fas fa-bars"></i>
+</button>
 
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-home me-2"></i>Producer List
-                </h5>
-            </div>
-            <div class="card-body">
-                <div id="shop-list">
-                    <!-- Producer cards will be populated by JavaScript -->
+<!-- Mobile Overlay -->
+<div class="map-overlay" onclick="closeMobileMenu()"></div>
+
+<div class="map-container">
+    <!-- Left Producer Panel -->
+    <div class="producer-panel" id="producer-panel">
+        <div class="producer-list">
+            <div id="shop-list">
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading producers...</p>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <!-- Right Map Area -->
+    <div class="map-area">
+        <div id="map"></div>
     </div>
 </div>
 {% endblock %}
@@ -52,13 +186,21 @@ let map;
 let markers = [];
 let shops = [];
 
+// Add map-view class to body for full screen styling
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('map-view');
+});
+
 function initMap() {
     // Default to a central location
     const defaultCenter = { lat: 39.8283, lng: -98.5795 }; // Center of US
     
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 10,
-        center: defaultCenter
+        center: defaultCenter,
+        mapTypeControl: true,
+        fullscreenControl: false,
+        streetViewControl: false
     });
     
     // Try to get user's location
@@ -96,6 +238,7 @@ function loadShops() {
         })
         .catch(error => {
             console.error('Error loading shops:', error);
+            displayErrorMessage();
         });
 }
 
@@ -118,7 +261,7 @@ function displayShopsOnMap() {
         
         const infoWindow = new google.maps.InfoWindow({
             content: `
-                <div>
+                <div style="max-width: 250px;">
                     <h6>${shop.name}</h6>
                     <p class="mb-1">${shop.address}</p>
                     <p class="mb-1">
@@ -146,55 +289,91 @@ function displayShopList() {
     if (shops.length === 0) {
         shopList.innerHTML = `
             <div class="text-center py-4">
-                <i class="fas fa-store fa-3x text-muted mb-3"></i>
-                <h5 class="text-muted">No shops found</h5>
-                <p class="text-muted">Be the first to create a shop in your area!</p>
+                <i class="fas fa-store fa-2x text-muted mb-3"></i>
+                <h6 class="text-muted">No producers found</h6>
+                <p class="text-muted small">Be the first in your area!</p>
             </div>
         `;
         return;
     }
     
     const shopCards = shops.map(shop => `
-        <div class="col-md-6 col-lg-4 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        ${shop.name}
-                        <span class="badge ${shop.is_open ? 'bg-success' : 'bg-danger'} ms-2">
-                            ${shop.is_open ? 'Open' : 'Closed'}
+        <div class="producer-card" onclick="centerMapOnShop(${shop.latitude}, ${shop.longitude})">
+            <div class="card-body">
+                <h6 class="card-title mb-2">
+                    ${shop.name}
+                    <span class="badge ${shop.is_open ? 'bg-success' : 'bg-danger'} float-end">
+                        ${shop.is_open ? 'Open' : 'Closed'}
+                    </span>
+                </h6>
+                <p class="card-text text-muted small mb-2">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    ${shop.address}
+                </p>
+                ${shop.rating > 0 ? `
+                    <p class="card-text mb-0">
+                        <span class="text-warning small">
+                            ${'★'.repeat(Math.floor(shop.rating))}${'☆'.repeat(5 - Math.floor(shop.rating))}
                         </span>
-                    </h6>
-                    <p class="card-text text-muted">
-                        <i class="fas fa-map-marker-alt me-1"></i>
-                        ${shop.address}
+                        <small class="text-muted ms-1">${shop.rating.toFixed(1)}/5</small>
                     </p>
-                    ${shop.rating > 0 ? `
-                        <p class="card-text">
-                            <span class="text-warning">
-                                ${'★'.repeat(Math.floor(shop.rating))}${'☆'.repeat(5 - Math.floor(shop.rating))}
-                            </span>
-                            <small class="text-muted">${shop.rating.toFixed(1)}/5</small>
-                        </p>
-                    ` : ''}
-                </div>
-                <div class="card-footer">
-                    <a href="/shop/${shop.id}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-eye me-1"></i>Visit Shop
-                    </a>
-                    <button class="btn btn-outline-primary btn-sm" onclick="centerMapOnShop(${shop.latitude}, ${shop.longitude})">
-                        <i class="fas fa-map-marker-alt me-1"></i>Show on Map
-                    </button>
-                </div>
+                ` : ''}
+            </div>
+            <div class="card-footer">
+                <a href="/shop/${shop.id}" class="btn btn-primary btn-sm me-2" onclick="event.stopPropagation();">
+                    <i class="fas fa-eye me-1"></i>Visit
+                </a>
+                <small class="text-muted">
+                    <i class="fas fa-mouse-pointer me-1"></i>Click to center map
+                </small>
             </div>
         </div>
     `).join('');
     
-    shopList.innerHTML = `<div class="row">${shopCards}</div>`;
+    shopList.innerHTML = shopCards;
+}
+
+function displayErrorMessage() {
+    const shopList = document.getElementById('shop-list');
+    shopList.innerHTML = `
+        <div class="text-center py-4">
+            <i class="fas fa-exclamation-triangle fa-2x text-warning mb-3"></i>
+            <h6 class="text-muted">Unable to load producers</h6>
+            <p class="text-muted small">Please refresh the page to try again.</p>
+        </div>
+    `;
 }
 
 function centerMapOnShop(lat, lng) {
     map.setCenter({ lat: lat, lng: lng });
     map.setZoom(15);
+    
+    // Highlight the marker briefly
+    const marker = markers.find(m => 
+        m.getPosition().lat() === lat && m.getPosition().lng() === lng
+    );
+    if (marker) {
+        // Bounce the marker
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(() => marker.setAnimation(null), 2000);
+    }
+}
+
+// Mobile menu functions
+function toggleMobileMenu() {
+    const panel = document.getElementById('producer-panel');
+    const overlay = document.querySelector('.map-overlay');
+    
+    panel.classList.toggle('show');
+    overlay.classList.toggle('show');
+}
+
+function closeMobileMenu() {
+    const panel = document.getElementById('producer-panel');
+    const overlay = document.querySelector('.map-overlay');
+    
+    panel.classList.remove('show');
+    overlay.classList.remove('show');
 }
 
 // Initialize map when page loads
@@ -209,7 +388,7 @@ window.onload = function() {
                 <div class="text-center">
                     <i class="fas fa-map fa-3x text-muted mb-3"></i>
                     <h5 class="text-muted">Map service unavailable</h5>
-                    <p class="text-muted">Please check the shop list below to find local sellers.</p>
+                    <p class="text-muted">Please check the producer list to find local sellers.</p>
                 </div>
             </div>
         `;
@@ -218,8 +397,13 @@ window.onload = function() {
         loadShops();
     }
 };
+
+// Clean up when leaving the page
+window.addEventListener('beforeunload', function() {
+    document.body.classList.remove('map-view');
+});
 </script>
 
-<!-- Google Maps API - Replace YOUR_API_KEY with actual key -->
+<!-- Google Maps API -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config.GOOGLE_MAPS_API_KEY or 'YOUR_API_KEY' }}&callback=initMap"></script>
 {% endblock %}

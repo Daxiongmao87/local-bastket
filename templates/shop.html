@@ -7,7 +7,7 @@
     <div class="col-md-8">
         <div class="card">
             {% if shop.banner_image %}
-                <img src="{{ shop.banner_image }}" class="card-img-top" alt="{{ shop.name }}">
+                <img src="{{ url_for('static', filename=shop.banner_image) }}" class="card-img-top" alt="{{ shop.name }}">
             {% endif %}
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">

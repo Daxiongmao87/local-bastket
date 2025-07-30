@@ -30,6 +30,9 @@ class Config:
     # Application settings
     ITEMS_PER_PAGE = 20
     
+    # Google Maps API
+    GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY', 'AIzaSyAaZvec0_5OrC7KS-kIx3ZTP7r0_TxZu3o')
+    
     @staticmethod
     def init_app(app):
         """Initialize application with configuration."""

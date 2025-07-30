@@ -115,6 +115,9 @@
   --container-xl: 1140px;
   --container-2xl: 1320px;
   
+  /* Component heights */
+  --navbar-height: 56px;
+  
   /* Local Fare specific colors */
   --home-green: #2E7D32;               /* Main home-grown color */
   --fresh-green: #4CAF50;              /* Fresh produce */

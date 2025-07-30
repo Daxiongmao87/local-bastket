@@ -74,6 +74,11 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
+@auth_bp.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
+
 @auth_bp.route('/confirm/<token>')
 def confirm_email(token):
     email = email_service.confirm_token(token)

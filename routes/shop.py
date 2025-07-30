@@ -6,11 +6,6 @@ from services.file_service import file_service
 
 shop_bp = Blueprint('shop', __name__)
 
-@shop_bp.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', user=current_user)
-
 @shop_bp.route('/shop/create', methods=['GET', 'POST'])
 @login_required
 def create_shop():
@@ -95,7 +90,27 @@ def edit_shop(shop_id):
                     flash(f'Banner upload failed: {str(e)}')
                     return render_template('edit_shop.html', form=form, shop=shop)
         
-        form.populate_obj(shop)
+        # Manually populate fields excluding banner_image to avoid FileStorage overwrite
+        shop.name = form.name.data
+        shop.description = form.description.data
+        shop.address = form.address.data
+        shop.latitude = form.latitude.data
+        shop.longitude = form.longitude.data
+        shop.phone = form.phone.data
+        shop.email = form.email.data
+        shop.website = form.website.data
+        shop.hours_monday = form.hours_monday.data
+        shop.hours_tuesday = form.hours_tuesday.data
+        shop.hours_wednesday = form.hours_wednesday.data
+        shop.hours_thursday = form.hours_thursday.data
+        shop.hours_friday = form.hours_friday.data
+        shop.hours_saturday = form.hours_saturday.data
+        shop.hours_sunday = form.hours_sunday.data
+        shop.payment_cash = form.payment_cash.data
+        shop.payment_venmo = form.payment_venmo.data
+        shop.payment_paypal = form.payment_paypal.data
+        shop.payment_zelle = form.payment_zelle.data
+        shop.is_open = form.is_open.data
         db.session.commit()
         flash('Shop updated successfully!')
         return redirect(url_for('shop.view_shop', shop_id=shop_id))
