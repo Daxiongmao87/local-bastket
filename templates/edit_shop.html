@@ -59,6 +59,10 @@
                     <div class="mb-3">
                         {{ form.banner_image.label(class="form-label") }} <span class="text-muted">(optional)</span>
                         {{ form.banner_image(class="form-control") }}
+                        <div class="form-text">
+                            <strong>Recommended dimensions:</strong> 1200x400px (3:1 aspect ratio) for best appearance.<br>
+                            <small class="text-muted">Images will be automatically cropped to fit. JPG, PNG, GIF formats accepted. Max 16MB.</small>
+                        </div>
                         {% if form.banner_image.errors %}
                             <div class="invalid-feedback d-block">
                                 {% for error in form.banner_image.errors %}
