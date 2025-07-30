@@ -392,11 +392,8 @@
   background-color: var(--background-light);
   border-bottom: var(--border-width-thin) solid var(--border-color);
   box-shadow: var(--shadow-base);
-  padding-top: var(--spacing-base);
-  padding-bottom: var(--spacing-base);
+  padding: var(--spacing-base) var(--spacing-base);
 }
-
-/* Bootstrap container handles padding automatically */
 
 .navbar .navbar-brand {
   color: var(--primary-color) !important;
