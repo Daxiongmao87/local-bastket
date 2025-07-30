@@ -223,3 +223,271 @@ export MAIL_PASSWORD=your-mail-password
 - [ ] Static files served efficiently
 - [ ] Error logging configured
 - [ ] Backup strategy implemented
+
+## Phase 4: Advanced CSS Development Tools
+
+### CSS Architecture Overview
+
+The project now includes a comprehensive CSS development toolchain with:
+
+```
+static/css/
+├── variables.css           # Core design tokens
+├── design-system.css       # Extended design tokens (200+ variables)
+├── base.css               # Base styles and typography
+├── main.css               # Main application styles
+├── components-v2.css      # Modern component library with container queries
+├── accessibility.css      # WCAG 2.1 AA compliance features
+└── build/                 # Production builds (auto-generated)
+```
+
+### Development Tools
+
+#### CSS Linting and Formatting
+```bash
+# Install Node.js dependencies
+npm install
+
+# Lint CSS files with Stylelint
+npm run lint:css
+
+# Format CSS files with Prettier
+npm run format:css
+
+# Combined test (linting + build)
+npm run test:css
+```
+
+#### CSS Build System
+```bash
+# Build production CSS bundle
+npm run build:css
+python build_css.py
+
+# Watch CSS files for changes
+npm run dev:css
+
+# Development server with hot reload
+python dev_server.py
+```
+
+#### CSS Analysis
+```bash
+# Comprehensive CSS analysis
+npm run analyze:css
+python analyze_css.py
+
+# Output includes:
+# - File size analysis and compression ratios
+# - CSS rule and selector statistics
+# - Custom property usage
+# - Accessibility feature detection
+# - Optimization recommendations
+```
+
+### Design System Usage
+
+#### Design Tokens
+Use CSS custom properties for consistent styling:
+
+```css
+/* Color System (semantic colors) */
+.my-component {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+/* Typography Scale (fluid typography) */
+.title { font-size: var(--text-2xl); }
+.body { font-size: var(--text-base); }
+.caption { font-size: var(--text-sm); }
+
+/* Spacing Scale */
+.component {
+  padding: var(--space-base);
+  margin-bottom: var(--space-lg);
+}
+```
+
+#### Container Queries
+Components respond to their container size:
+
+```css
+.shop-card {
+  container-type: inline-size;
+  container-name: shop-card;
+}
+
+@container shop-card (min-width: 500px) {
+  .shop-card__content {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+```
+
+#### BEM Methodology
+Follow Block Element Modifier naming:
+
+```css
+/* Block */
+.shop-card { }
+
+/* Elements */
+.shop-card__image { }
+.shop-card__title { }
+.shop-card__description { }
+
+/* Modifiers */
+.shop-card--featured { }
+.shop-card--compact { }
+```
+
+### Accessibility Standards
+
+All CSS must meet WCAG 2.1 AA compliance:
+
+```css
+/* Focus Management */
+.interactive-element:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  .component {
+    border: 2px solid;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .component {
+    animation: none;
+    transition: none;
+  }
+}
+```
+
+### Performance Optimization
+
+#### Bundle Size Monitoring
+- **Target Bundle Size**: < 60KB uncompressed
+- **Critical CSS**: < 5KB for above-the-fold content
+- **FontAwesome Subset**: Custom subset (99.6% size reduction)
+- **Gzip Compression**: Achieve > 80% compression ratio
+
+#### Development Workflow
+1. **Edit CSS files** in `static/css/`
+2. **Watch builds automatically** with `python dev_server.py`
+3. **Analyze performance** with `npm run analyze:css`
+4. **Test accessibility** with automated tools
+5. **Lint before commit** with pre-commit hooks
+
+### Pre-commit Hooks
+
+The project includes automated quality checks:
+
+```bash
+# Install pre-commit hooks
+pip install pre-commit  
+pre-commit install
+
+# Manual run
+pre-commit run --all-files
+```
+
+Hooks include:
+- CSS linting with Stylelint
+- Python formatting with Black
+- CSS build verification
+- File size checks
+
+### Production Build
+
+Generate optimized production assets:
+
+```bash
+# Full production build
+npm run build:css
+
+# Generates:
+# - static/build/bundle.min.css (complete bundle)
+# - static/build/fontawesome-subset.min.css (icon subset)
+# - static/build/critical.min.css (above-the-fold styles)
+# - templates/base_production.html (optimized template)
+```
+
+### Component Development
+
+#### Creating New Components
+
+1. **Define component in `components-v2.css`**:
+```css
+.new-component {
+  padding: var(--space-base);
+  background: var(--color-surface);
+  border-radius: var(--radius-base);
+  container-type: inline-size;
+  container-name: new-component;
+}
+
+@container new-component (min-width: 400px) {
+  .new-component {
+    padding: var(--space-lg);
+  }
+}
+```
+
+2. **Add accessibility features**:
+```css
+.new-component:focus-visible {
+  outline: 2px solid var(--color-focus);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .new-component {
+    transition: none;
+  }
+}
+```
+
+3. **Document in COMPONENT_LIBRARY.md**
+
+4. **Test with analysis tools**:
+```bash
+npm run analyze:css
+```
+
+### Troubleshooting
+
+#### Common Issues
+
+**Build Failures**:
+```bash
+# Clear build cache
+rm -rf static/build/*
+python build_css.py
+```
+
+**Linting Errors**:
+```bash
+# Auto-fix most issues
+npm run lint:css --fix
+```
+
+**Hot Reload Not Working**:
+```bash
+# Restart development server
+python dev_server.py --no-browser
+```
+
+**Performance Issues**:
+```bash
+# Analyze bundle size and usage
+npm run analyze:css
+```
+
+For detailed component documentation, see [COMPONENT_LIBRARY.md](COMPONENT_LIBRARY.md)

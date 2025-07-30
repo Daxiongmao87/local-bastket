@@ -1,0 +1,51 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: check-merge-conflict
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        files: \.py$
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        files: \.py$
+        args: ['--max-line-length=100']
+
+  - repo: local
+    hooks:
+      - id: stylelint
+        name: Stylelint CSS
+        entry: npx stylelint
+        language: node
+        files: \.css$
+        args: ['--fix']
+        additional_dependencies:
+          - stylelint@15.10.3
+          - stylelint-config-standard@34.0.0
+
+      - id: css-build
+        name: Build CSS Bundle
+        entry: python build_css.py
+        language: python
+        files: static/css/.*\.css$
+        pass_filenames: false
+
+      - id: css-analysis
+        name: CSS Analysis
+        entry: python analyze_css.py
+        language: python
+        files: static/css/.*\.css$
+        pass_filenames: false
+        stages: [manual]

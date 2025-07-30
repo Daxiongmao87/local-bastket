@@ -3,7 +3,7 @@
 @import url('base.css');
 @import url('components.css');
 
-/* FontAwesome Pro Integration (as specified in DEVELOPMENT.md) */
+/* FontAwesome Pro 5.15.4 - Complete Library */
 @import url('../fontawesome-pro-5.15.4-web/css/all.min.css');
 
 /* App-specific styles */
@@ -15,7 +15,7 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--home-green), var(--harvest-orange));
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   color: #FFFFFF;
   padding: var(--spacing-4xl) 0;
   text-align: center;

@@ -117,68 +117,10 @@ img {
   padding: 0 var(--spacing-base);
 }
 
-/* Grid system */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 calc(-1 * var(--spacing-sm));
-}
-
-.col {
-  flex: 1;
-  padding: 0 var(--spacing-sm);
-}
-
-.col-auto {
-  flex: 0 0 auto;
-  width: auto;
-}
-
-/* Responsive columns */
-@media (min-width: 576px) {
-  .col-sm-1 { flex: 0 0 8.333333%; }
-  .col-sm-2 { flex: 0 0 16.666667%; }
-  .col-sm-3 { flex: 0 0 25%; }
-  .col-sm-4 { flex: 0 0 33.333333%; }
-  .col-sm-5 { flex: 0 0 41.666667%; }
-  .col-sm-6 { flex: 0 0 50%; }
-  .col-sm-7 { flex: 0 0 58.333333%; }
-  .col-sm-8 { flex: 0 0 66.666667%; }
-  .col-sm-9 { flex: 0 0 75%; }
-  .col-sm-10 { flex: 0 0 83.333333%; }
-  .col-sm-11 { flex: 0 0 91.666667%; }
-  .col-sm-12 { flex: 0 0 100%; }
-}
-
-@media (min-width: 768px) {
-  .col-md-1 { flex: 0 0 8.333333%; }
-  .col-md-2 { flex: 0 0 16.666667%; }
-  .col-md-3 { flex: 0 0 25%; }
-  .col-md-4 { flex: 0 0 33.333333%; }
-  .col-md-5 { flex: 0 0 41.666667%; }
-  .col-md-6 { flex: 0 0 50%; }
-  .col-md-7 { flex: 0 0 58.333333%; }
-  .col-md-8 { flex: 0 0 66.666667%; }
-  .col-md-9 { flex: 0 0 75%; }
-  .col-md-10 { flex: 0 0 83.333333%; }
-  .col-md-11 { flex: 0 0 91.666667%; }
-  .col-md-12 { flex: 0 0 100%; }
-}
-
-@media (min-width: 992px) {
-  .col-lg-1 { flex: 0 0 8.333333%; }
-  .col-lg-2 { flex: 0 0 16.666667%; }
-  .col-lg-3 { flex: 0 0 25%; }
-  .col-lg-4 { flex: 0 0 33.333333%; }
-  .col-lg-5 { flex: 0 0 41.666667%; }
-  .col-lg-6 { flex: 0 0 50%; }
-  .col-lg-7 { flex: 0 0 58.333333%; }
-  .col-lg-8 { flex: 0 0 66.666667%; }
-  .col-lg-9 { flex: 0 0 75%; }
-  .col-lg-10 { flex: 0 0 83.333333%; }
-  .col-lg-11 { flex: 0 0 91.666667%; }
-  .col-lg-12 { flex: 0 0 100%; }
-}
+/* NOTE: Grid system removed - using Bootstrap 5.1.3 grid system instead
+ * This eliminates duplicate CSS and reduces bundle size
+ * Bootstrap grid classes: .row, .col-*, .col-sm-*, .col-md-*, .col-lg-* 
+ */
 
 /* Utilities */
 .text-center { text-align: center; }
@@ -216,6 +158,11 @@ img {
 .w-100 { width: 100%; }
 .h-100 { height: 100%; }
 
+/* Custom spacing utilities using Local Fare design tokens
+ * NOTE: These override Bootstrap spacing to use our custom scale
+ * Bootstrap: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem
+ * Local Fare: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem
+ */
 .mb-0 { margin-bottom: 0; }
 .mb-1 { margin-bottom: var(--spacing-xs); }
 .mb-2 { margin-bottom: var(--spacing-sm); }

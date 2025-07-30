@@ -1,0 +1,54 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recess-order"
+  ],
+  "plugins": [
+    "stylelint-order",
+    "stylelint-selector-bem-pattern"
+  ],
+  "rules": {
+    "plugin/selector-bem-pattern": {
+      "preset": "bem",
+      "presetOptions": {
+        "namespace": "lb"
+      }
+    },
+    "order/properties-alphabetical-order": null,
+    "order/order": [
+      "custom-properties",
+      "declarations"
+    ],
+    "custom-property-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+    "selector-class-pattern": "^([a-z][a-z0-9]*)(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+    "declaration-block-trailing-semicolon": "always",
+    "declaration-colon-space-after": "always",
+    "declaration-colon-space-before": "never",
+    "indentation": 2,
+    "max-nesting-depth": 3,
+    "no-duplicate-selectors": true,
+    "no-empty-source": null,
+    "selector-pseudo-element-colon-notation": "double",
+    "string-quotes": "single",
+    "color-hex-case": "lower",
+    "color-hex-length": "short",
+    "font-family-name-quotes": "always-where-recommended",
+    "unit-no-unknown": true,
+    "property-no-unknown": true,
+    "declaration-block-no-duplicate-properties": true,
+    "selector-type-no-unknown": true,
+    "comment-whitespace-inside": "always",
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "static/build/**/*",
+    "static/backup/**/*",
+    "node_modules/**/*"
+  ]
+}

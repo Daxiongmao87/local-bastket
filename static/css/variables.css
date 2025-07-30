@@ -118,18 +118,22 @@
   /* Component heights */
   --navbar-height: 56px;
   
-  /* Local Fare specific colors */
-  --home-green: #2E7D32;               /* Main home-grown color */
-  --fresh-green: #4CAF50;              /* Fresh produce */
-  --harvest-orange: #FF6F00;           /* Harvest time */
-  --garden-sage: #81C784;              /* Herb garden */
-  --earth-brown: #5D4037;              /* Rich soil (minimal usage) */
+  /* Extended theme colors for Local Fare branding */
+  --garden-sage: #81C784;              /* Herb garden accent */
   --nature-teal: #00695C;              /* Natural complement */
-  --sunshine-yellow: #FFC107;          /* Sunshine */
-  --berry-red: #E53935;                /* Fresh berries */
-  --cream-white: #FAFAFA;              /* Clean base */
-  --stone-gray: #9E9E9E;               /* Natural stone */
+  --sunshine-yellow: #FFC107;          /* Sunshine highlight */
+  --berry-red: #E53935;                /* Fresh berries accent */
+  --stone-gray: #9E9E9E;               /* Natural stone text */
+  
+  /* NOTE: Removed duplicate color definitions:
+   * --home-green, --fresh-green -> use --primary-color, --primary-light
+   * --harvest-orange -> use --accent-color  
+   * --earth-brown -> use --secondary-color
+   * --cream-white -> use --background-color
+   */
 }
 
-/* Import Google Fonts for modern typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+/* NOTE: Google Fonts loading moved to base.html for performance optimization
+ * Using preconnect and font-display: swap for faster rendering
+ * Fonts: Inter (300,400,500,600,700), Poppins (400,500,600,700), Nunito (400,600,700,800)
+ */

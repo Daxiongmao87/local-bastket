@@ -94,3 +94,21 @@ Local Basket is a Flask-based Progressive Web App (PWA) that connects local home
 - **Use Flask-Migrate for all schema changes.** The project is configured to use `Flask-Migrate` for managing database schema changes. Never use `db.create_all()` to initialize the database, as this can interfere with the migration history.
 - **To initialize the database for the first time:** Run `flask db upgrade`.
 - **To apply new migrations:** Run `flask db migrate -m "Short description of changes"` followed by `flask db upgrade`.
+
+## Task Management Workflow
+
+### CLAUDE_TASK.md Usage
+- **ALWAYS create a fresh CLAUDE_TASK.md file** whenever a new complex task is assigned
+- **Use CLAUDE_TASK.md to document**: Comprehensive strategies, analysis results, implementation plans, and multi-phase approaches
+- **Reference CLAUDE_TASK.md** throughout task execution to maintain consistency and track progress
+- **Keep CLAUDE_TASK.md updated** with status changes, findings, and next steps
+- **Include in CLAUDE_TASK.md**: Executive summaries, detailed analysis, step-by-step strategies, priority matrices, success metrics, and timelines
+
+### When to Use CLAUDE_TASK.md
+- Complex refactoring strategies
+- Architectural analysis and recommendations  
+- Multi-phase implementation plans
+- Performance optimization strategies
+- Security audit findings and remediation plans
+- Code quality assessments
+- Any task requiring structured documentation of approach and outcomes
