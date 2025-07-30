@@ -392,7 +392,13 @@
   background-color: var(--background-light);
   border-bottom: var(--border-width-thin) solid var(--border-color);
   box-shadow: var(--shadow-base);
-  padding: var(--spacing-base) var(--spacing-base);
+  padding-top: var(--spacing-base);
+  padding-bottom: var(--spacing-base);
+}
+
+.navbar.navbar-expand-lg {
+  padding-left: var(--spacing-base);
+  padding-right: var(--spacing-base);
 }
 
 .navbar .navbar-brand {
