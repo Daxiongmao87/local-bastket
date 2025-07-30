@@ -396,6 +396,8 @@
   padding-bottom: var(--spacing-base);
 }
 
+/* Bootstrap container handles padding automatically */
+
 .navbar .navbar-brand {
   color: var(--primary-color) !important;
   font-weight: var(--font-weight-bold);

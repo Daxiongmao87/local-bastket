@@ -105,17 +105,10 @@ img {
 }
 
 /* Layout containers */
-.container {
-  width: 100%;
-  max-width: var(--container-xl);
-  margin: 0 auto;
-  padding: 0 var(--spacing-base);
-}
-
-.container-fluid {
-  width: 100%;
-  padding: 0 var(--spacing-base);
-}
+/* NOTE: Using Bootstrap 5.1.3 container classes instead of custom containers
+ * Bootstrap handles responsive padding and max-widths automatically
+ * Custom containers removed to prevent conflicts with Bootstrap
+ */
 
 /* NOTE: Grid system removed - using Bootstrap 5.1.3 grid system instead
  * This eliminates duplicate CSS and reduces bundle size
