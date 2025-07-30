@@ -105,6 +105,10 @@ class ReviewForm(FlaskForm):
     comment = TextAreaField('Comment', validators=[Optional(), Length(max=500)])
 
 
+class ReviewResponseForm(FlaskForm):
+    response_text = TextAreaField('Your Response', validators=[DataRequired(), Length(max=500)])
+
+
 class SearchForm(FlaskForm):
     query = StringField('Search', validators=[Optional(), Length(max=100)])
     category = SelectField('Category', validators=[Optional()], choices=[
@@ -137,6 +141,8 @@ class SearchForm(FlaskForm):
         ('2', '2+ Stars'),
         ('1', '1+ Stars')
     ])
+    user_lat = FloatField('user_lat', validators=[Optional()])
+    user_lon = FloatField('user_lon', validators=[Optional()])
 
 
 class ProfileForm(FlaskForm):

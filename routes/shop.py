@@ -77,6 +77,10 @@ def edit_shop(shop_id):
     
     form = ShopForm(obj=shop)
     if form.validate_on_submit():
+        # Check if the 'is_open' status was manually changed
+        if 'is_open' in form and form.is_open.data != shop.is_open:
+            shop.manual_override = True
+
         # Handle banner image upload
         if 'banner_image' in request.files:
             banner_file = request.files['banner_image']
@@ -97,6 +101,19 @@ def edit_shop(shop_id):
         return redirect(url_for('shop.view_shop', shop_id=shop_id))
     
     return render_template('edit_shop.html', form=form, shop=shop)
+
+@shop_bp.route('/shop/<int:shop_id>/resume_schedule', methods=['POST'])
+@login_required
+def resume_schedule(shop_id):
+    shop = Shop.query.get_or_404(shop_id)
+    if shop.user_id != current_user.id:
+        flash('You can only edit your own shop.')
+        return redirect(url_for('shop.view_shop', shop_id=shop_id))
+    
+    shop.manual_override = False
+    db.session.commit()
+    flash('Automated shop status schedule has been resumed.')
+    return redirect(url_for('shop.edit_shop', shop_id=shop_id))
 
 @shop_bp.route('/shop/<int:shop_id>/products/add', methods=['GET', 'POST'])
 @login_required

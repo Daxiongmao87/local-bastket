@@ -87,3 +87,10 @@ Local Basket is a Flask-based Progressive Web App (PWA) that connects local home
 - Frontend tests for PWA functionality
 - Location service mocking for tests
 - Payment integration tests (using sandbox/test modes)
+
+## Best Practices
+
+### Database Management
+- **Use Flask-Migrate for all schema changes.** The project is configured to use `Flask-Migrate` for managing database schema changes. Never use `db.create_all()` to initialize the database, as this can interfere with the migration history.
+- **To initialize the database for the first time:** Run `flask db upgrade`.
+- **To apply new migrations:** Run `flask db migrate -m "Short description of changes"` followed by `flask db upgrade`.

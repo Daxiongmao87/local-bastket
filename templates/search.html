@@ -1,16 +1,13 @@
-{% extends "base.html" %}
-
-{% block title %}Search - Local Fare{% endblock %}
-
-{% block content %}
 <div class="row">
     <div class="col-md-4">
         <div class="search-filters">
             <h5 class="mb-3">
                 <i class="fas fa-search me-2"></i>Search Filters
             </h5>
-            <form method="GET">
+            <form method="GET" id="search-form">
                     {{ form.hidden_tag() }}
+                    {{ form.user_lat() }}
+                    {{ form.user_lon() }}
                     
                     <div class="mb-3">
                         {{ form.query.label(class="form-label") }}
@@ -174,4 +171,31 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('search-form');
+    const distanceSelect = document.getElementById('max_distance');
+
+    searchForm.addEventListener('submit', function(event) {
+        if (distanceSelect.value) {
+            event.preventDefault(); // Stop form submission
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('user_lat').value = position.coords.latitude;
+                    document.getElementById('user_lon').value = position.coords.longitude;
+                    searchForm.submit(); // Submit the form with coordinates
+                }, function() {
+                    alert('Could not get your location. Please select "Any Distance" or allow location access.');
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

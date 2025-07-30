@@ -221,5 +221,5 @@ window.onload = function() {
 </script>
 
 <!-- Google Maps API - Replace YOUR_API_KEY with actual key -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config.GOOGLE_MAPS_API_KEY or 'YOUR_API_KEY' }}&callback=initMap"></script>
 {% endblock %}

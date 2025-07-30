@@ -47,6 +47,7 @@ class Shop(db.Model):
     website = db.Column(db.String(200))
     is_active = db.Column(db.Boolean, default=True)
     is_open = db.Column(db.Boolean, default=False)  # Closed by default as specified
+    manual_override = db.Column(db.Boolean, default=False) # To override automated open/close
     hours_monday = db.Column(db.String(50))
     hours_tuesday = db.Column(db.String(50))
     hours_wednesday = db.Column(db.String(50))
@@ -141,6 +142,20 @@ class Review(db.Model):
     
     def __repr__(self):
         return f'<Review {self.rating} stars for {self.shop.name}>'
+
+
+class ReviewResponse(db.Model):
+    __tablename__ = 'review_responses'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    response_text = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    review_id = db.Column(db.Integer, db.ForeignKey('reviews.id'), nullable=False, unique=True)
+    review = db.relationship('Review', backref=db.backref('response', uselist=False))
+
+    def __repr__(self):
+        return f'<ReviewResponse for review {self.review_id}>'
 
 
 class Location(db.Model):

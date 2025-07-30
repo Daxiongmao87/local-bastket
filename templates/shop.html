@@ -220,7 +220,19 @@
                                 {% endfor %}
                             </div>
                             {% if review.comment %}
-                                <p class="mt-2 mb-0">{{ review.comment }}</p>
+                                <p class="mt-2 mb-1">{{ review.comment }}</p>
+                            {% endif %}
+
+                            {% if review.response %}
+                                <div class="alert alert-light mt-2">
+                                    <strong>Response from {{ shop.name }}:</strong>
+                                    <p class="mb-0">{{ review.response.response_text }}</p>
+                                    <small class="text-muted">{{ review.response.created_at.strftime('%Y-%m-%d') }}</small>
+                                </div>
+                            {% elif current_user.is_authenticated and current_user.id == shop.user_id %}
+                                <a href="{{ url_for('shop.respond_to_review', review_id=review.id) }}" class="btn btn-sm btn-outline-primary mt-2">
+                                    <i class="fas fa-reply me-1"></i> Respond
+                                </a>
                             {% endif %}
                         </div>
                     {% endfor %}

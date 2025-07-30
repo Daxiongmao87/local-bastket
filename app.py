@@ -5,6 +5,8 @@ from flask_migrate import Migrate
 from models import db, User
 from services.email_service import email_service
 from config import config
+from apscheduler.schedulers.background import BackgroundScheduler
+from services.shop_service import shop_service
 
 
 def create_app(config_name=None):
@@ -19,6 +21,17 @@ def create_app(config_name=None):
     db.init_app(app)
     migrate = Migrate(app, db)
     email_service.init_app(app)
+    
+    # Scheduler for automated tasks
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(
+        func=lambda: shop_service.update_shop_statuses(),
+        trigger="interval",
+        minutes=10,
+        id='update_shop_statuses_job',
+        replace_existing=True
+    )
+    scheduler.start()
     
     # Login manager setup
     login_manager = LoginManager()
@@ -60,8 +73,5 @@ def create_app(config_name=None):
 
 if __name__ == '__main__':
     app = create_app()
-    
-    with app.app_context():
-        db.create_all()
     
     app.run(debug=True, host='0.0.0.0', port=5000)

@@ -211,14 +211,23 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    <h5 class="mt-4 mb-3">Shop Status</h5>
                     <div class="mb-3">
                         <div class="form-check">
                             {{ form.is_open(class="form-check-input") }}
                             {{ form.is_open.label(class="form-check-label") }}
                         </div>
+                        {% if shop.manual_override %}
+                        <div class="alert alert-info mt-2">
+                            You have manually overridden the shop status. The automated schedule is paused.
+                            <form action="{{ url_for('shop.resume_schedule', shop_id=shop.id) }}" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Resume automated schedule</button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-2"></i>Update Shop
                     </button>
